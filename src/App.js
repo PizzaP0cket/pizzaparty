@@ -10,6 +10,7 @@ import {
   Stack,
   Offcanvas,
   Navbar,
+  Popover,
 } from "react-bootstrap";
 import React, { useState, useEffect} from "react";
 import { QRCodeSVG } from "qrcode.react";
@@ -110,6 +111,11 @@ function App() {
       });
   }
 
+  const loginToSpotify = () => {
+    // Navigate to Spotify for Authentication
+    window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&scope=${SCOPE}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`
+  }
+
 
   return (
     <div className="App">
@@ -118,25 +124,23 @@ function App() {
           <Offcanvas.Title>Settings</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body style={{ textAlign: "center" }}>
-          <a
-            href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&scope=${SCOPE}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}
-          >
-            login to spotify
-          </a>
-          <br />
-          <br />
+          <Button variant="success" onClick={loginToSpotify}>Login to Spotify</Button>
+          <br/>
+          <br/>
           <p>Bring others to the party!</p>
           <QRCodeSVG value={`${LOCALIP}${QRCodeHash}`} size="200px" />
+          <br/>
+          <br/>
+          <Button onClick={() => navigator.clipboard.writeText(`${REDIRECT_URI}#access_token=${accessToken}&token_type=Bearer&expires_in=3600`)}>Copy Link!</Button>
         </Offcanvas.Body>
       </Offcanvas>
 
       <Container>
-        <Navbar>
-          <Button onClick={handleShow}>#</Button>
-          <Navbar.Brand>Spotify - Add to queue</Navbar.Brand>
+        <Navbar  expand="md-3">
+          <Navbar.Toggle onClick={handleShow}/>
+          <Navbar.Brand>Spotify - Pizza Party</Navbar.Brand>
         </Navbar>
       </Container>
-
 
       <Container>
         <InputGroup className="mb-3" size="lg">
@@ -167,7 +171,7 @@ function App() {
                     rounded
                   />
               <Stack style={{textAlign:"left"}}>
-                <p><b>{track.name}</b>
+                <p style={{paddingTop:10}}><b>{track.name}</b>
                 <br/>
                 {track.artists[0].name}</p>
               </Stack>
