@@ -11,20 +11,21 @@ import {
   Offcanvas,
   Navbar,
 } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import { QRCodeSVG } from "qrcode.react";
 
 
 const LOCALIP = "https://pizzap0cket.github.io/pizzaparty/"; // CHANGE THIS BIT
 
 const CLIENT_ID = "353497b40ba74572a39741002907e097";
-const CLIENT_SECRET = process.env.REACT_APP_SPOTIFY_API_KEY;
 const REDIRECT_URI = "https://pizzap0cket.github.io/pizzaparty/";
 const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
 const RESPONSE_TYPE = "token";
 const SCOPE = "user-modify-playback-state";
 
 function App() {
+
+  const CLIENT_SECRET = process.env.REACT_APP_SPOTIFY_API_KEY;
   const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
   const [tracks, setTracks] = useState([]);
@@ -36,6 +37,7 @@ function App() {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
+
     const hash = window.location.hash;
     var urlToken = window.localStorage.getItem("token");
 
