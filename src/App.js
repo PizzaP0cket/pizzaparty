@@ -6,7 +6,7 @@ import {
   InputGroup,
   FormControl,
   Button,
-  ListGroup,
+  Image,
   Stack,
   Offcanvas,
   Navbar,
@@ -110,6 +110,7 @@ function App() {
       });
   }
 
+
   return (
     <div className="App">
       <Offcanvas show={show} onHide={handleClose}>
@@ -136,6 +137,7 @@ function App() {
         </Navbar>
       </Container>
 
+
       <Container>
         <InputGroup className="mb-3" size="lg">
           <FormControl
@@ -148,29 +150,31 @@ function App() {
             }}
             onChange={(event) => setSearchInput(event.target.value)}
           />
-          <Button onClick={search}>Search</Button>
+          <Button variant="outline-success" onClick={search}>Search</Button>
         </InputGroup>
       </Container>
+
       <Container>
         {tracks.map((track, i) => {
           console.log(track);
           return (
-            <ListGroup>
-              <ListGroup.Item action variant="dark">
-                <Stack direction="horizontal" gap={2}>
-                  <img
+
+            <Stack direction="horizontal">
+              <Image 
                     className="p-2"
                     src={track.album.images[0].url}
                     style={{ width: "80px", height: "auto" }}
+                    rounded
                   />
-                  <div className="p-2">{track.name}</div>
-                  <div className="vr  ms-auto" />
-                  <Button className="p-2" onClick={() => addToQueue(track.uri)}>
-                    Add
+              <Stack style={{textAlign:"left"}}>
+                <p><b>{track.name}</b>
+                <br/>
+                {track.artists[0].name}</p>
+              </Stack>
+              <Button variant="outline-success" onClick={() => addToQueue(track.uri)}>
+                    +
                   </Button>
-                </Stack>
-              </ListGroup.Item>
-            </ListGroup>
+              </Stack>
           );
         })}
       </Container>
