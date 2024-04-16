@@ -195,9 +195,10 @@ function App() {
         </InputGroup>
       </Container>
 
-      <Alert variant={`${alertType}`} show={alert} style={{position:"fixed", top:"20px", left:"50%", transform:`translateX(-50%)`, zIndex:'9999'}}>${alertMessage}</Alert>
 
       <Container>
+      <Alert variant={`${alertType}`} show={alert} style={{position:"fixed", top:"20px", left:"50%", transform:`translateX(-50%)`, zIndex:'9999'}}>{alertMessage}</Alert>
+
         {tracks.map((track, i) => {
           console.log(track);
           return (
