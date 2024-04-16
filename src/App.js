@@ -10,14 +10,12 @@ import {
   Stack,
   Offcanvas,
   Navbar,
-  Popover,
 } from "react-bootstrap";
 import React, { useState, useEffect} from "react";
 import { QRCodeSVG } from "qrcode.react";
 
 
 const LOCALIP = "https://pizzap0cket.github.io/pizzaparty/"; // CHANGE THIS BIT
-
 const CLIENT_ID = "353497b40ba74572a39741002907e097";
 const REDIRECT_URI = "https://pizzap0cket.github.io/pizzaparty/";
 const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
@@ -80,17 +78,19 @@ function App() {
         Authorization: "Bearer " + token,
       },
     };
-    console.log(token);
-    var addTrack = await fetch(
+    
+    await fetch(
       `https://api.spotify.com/v1/me/player/queue?uri=` + trackID,
       queueParameters
     );
   }
 
   async function search() {
-    console.log("Search for " + searchInput);
 
     // GET request using search to get the Artists ID
+    if (searchInput === ""){
+      return
+    } else {
 
     var trackParameters = {
       method: "GET",
@@ -100,19 +100,20 @@ function App() {
       },
     };
 
-    var returnedTracks = await fetch(
+    await fetch(
       "https://api.spotify.com/v1/search?q=" + searchInput + "&type=track",
       trackParameters
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setTracks(data.tracks.items);
       });
+    }
   }
 
   const loginToSpotify = () => {
     // Navigate to Spotify for Authentication
+    window.localStorage.removeItem("token");
     window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&scope=${SCOPE}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`
   }
 
@@ -147,8 +148,9 @@ function App() {
           <FormControl
             placeholder="Search for song"
             type="input"
+            required
             onKeyPress={(event) => {
-              if (event.key == "Enter") {
+              if (event.key === "Enter") {
                 search();
               }
             }}
@@ -163,19 +165,19 @@ function App() {
           console.log(track);
           return (
 
-            <Stack direction="horizontal">
-              <Image 
+            <Stack key={`LayoutSongInfo${i}`}  direction="horizontal">
+              <Image key={`Image${i}`} 
                     className="p-2"
                     src={track.album.images[0].url}
                     style={{ width: "80px", height: "auto" }}
                     rounded
                   />
-              <Stack style={{textAlign:"left"}}>
-                <p style={{paddingTop:10}}><b>{track.name}</b>
+              <Stack key={`SongInfoLayout${i}`} style={{textAlign:"left"}}>
+                <p key={`SongInfo${i}`} style={{paddingTop:10}}><b>{track.name}</b>
                 <br/>
                 {track.artists[0].name}</p>
               </Stack>
-              <Button variant="outline-success" onClick={() => addToQueue(track.uri)}>
+              <Button key={`addButton${i}`} variant="outline-success" onClick={() => addToQueue(track.uri)}>
                     +
                   </Button>
               </Stack>
