@@ -110,7 +110,7 @@ function App() {
       setTimeout(() => {
         setAlert(false);
       }, 1500); 
-    } elseif(addStatus === 200); {
+    } else if(addStatus === 200); {
       setAlertType("success");
       setAlertMessage(`${trackID.name} has been added`);
       setAlert(true);
