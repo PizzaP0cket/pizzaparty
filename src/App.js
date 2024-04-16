@@ -34,6 +34,8 @@ function App() {
   const [QRCodeHash, setHash] = useState("");
 
   const [alert, setAlert] = useState(false);
+  const [alertType, setAlertType] = useState("");
+  const [alertMessage , setAlertMessage] = useState("");
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -87,8 +89,9 @@ function App() {
 
     let addStatus; 
 
+    try {
     await fetch(
-      `https://api.spotify.com/v1/me/player/queue?uri=` + trackID,
+      `https://api.spotify.com/v1/me/player/queue?uri=` + trackID.uri,
       queueParameters
     ).then((result) => result.json())
     .then((data) => {
@@ -96,12 +99,24 @@ function App() {
       console.log(data)
       console.log(data.error.status)} 
     )
+  } catch {
+    addStatus = 200
+  }
 
     if (addStatus === 401) {
+      setAlertType("danger");
+      setAlertMessage(`Song not added - check access token`)
       setAlert(true);
       setTimeout(() => {
         setAlert(false);
       }, 1500); 
+    } elseif(addStatus === 200); {
+      setAlertType("success");
+      setAlertMessage(`${trackID.name} has been added`);
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 1500);
     }
 
   }
@@ -180,7 +195,7 @@ function App() {
         </InputGroup>
       </Container>
 
-      <Alert variant="danger" show={alert} style={{position:"fixed", top:"20px", left:"50%", transform:`translateX(-50%)`, zIndex:'9999'}}>Song not added - check access token</Alert>
+      <Alert variant={`${alertType}`} show={alert} style={{position:"fixed", top:"20px", left:"50%", transform:`translateX(-50%)`, zIndex:'9999'}}>${alertMessage}</Alert>
 
       <Container>
         {tracks.map((track, i) => {
@@ -198,7 +213,7 @@ function App() {
                 <br/>
                 {track.artists[0].name}</p>
               </Stack>
-              <Button key={`addButton${i}`} variant="outline-success" onClick={() => addToQueue(track.uri)}>
+              <Button key={`addButton${i}`} variant="outline-success" onClick={() => addToQueue(track)}>
                     +
                   </Button>
               </Stack>
