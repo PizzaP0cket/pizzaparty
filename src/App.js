@@ -89,6 +89,7 @@ function App() {
 
     let addStatus; 
 
+    try {
     await fetch(
       `https://api.spotify.com/v1/me/player/queue?uri=` + trackID.uri,
       queueParameters
@@ -98,6 +99,8 @@ function App() {
       console.log(data)
       console.log(data.error.status)} 
     )
+  } catch {
+  }
 
     if (addStatus === 401) {
       setAlertType("danger");
