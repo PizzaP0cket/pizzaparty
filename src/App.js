@@ -10,6 +10,8 @@ import {
   Stack,
   Offcanvas,
   Navbar,
+  Alert,
+  AlertHeading,
 } from "react-bootstrap";
 import React, { useState, useEffect} from "react";
 import { QRCodeSVG } from "qrcode.react";
@@ -31,9 +33,12 @@ function App() {
   const [token, setToken] = useState("");
   const [QRCodeHash, setHash] = useState("");
 
+  const [alert, setAlert] = useState(false);
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
 
   useEffect(() => {
 
@@ -71,6 +76,7 @@ function App() {
 
   // Search
   async function addToQueue(trackID) {
+
     var queueParameters = {
       method: "POST",
       headers: {
@@ -78,11 +84,26 @@ function App() {
         Authorization: "Bearer " + token,
       },
     };
-    
+
+    let addStatus; 
+
     await fetch(
       `https://api.spotify.com/v1/me/player/queue?uri=` + trackID,
       queueParameters
-    );
+    ).then((result) => result.json())
+    .then((data) => {
+      addStatus = data.error.status
+      console.log(data)
+      console.log(data.error.status)} 
+    )
+
+    if (addStatus === 401) {
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 1500); 
+    }
+
   }
 
   async function search() {
@@ -116,7 +137,6 @@ function App() {
     window.localStorage.removeItem("token");
     window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&scope=${SCOPE}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`
   }
-
 
   return (
     <div className="App">
@@ -160,11 +180,12 @@ function App() {
         </InputGroup>
       </Container>
 
+      <Alert variant="danger" show={alert} style={{position:"fixed", top:"20px", left:"50%", transform:`translateX(-50%)`, zIndex:'9999'}}>Song not added - check access token</Alert>
+
       <Container>
         {tracks.map((track, i) => {
           console.log(track);
           return (
-
             <Stack key={`LayoutSongInfo${i}`}  direction="horizontal">
               <Image key={`Image${i}`} 
                     className="p-2"
