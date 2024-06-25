@@ -11,7 +11,6 @@ import {
   Offcanvas,
   Navbar,
   Alert,
-  AlertHeading,
 } from "react-bootstrap";
 import React, { useState, useEffect} from "react";
 import { QRCodeSVG } from "qrcode.react";
