@@ -13,7 +13,6 @@ import {
   Alert,
 } from "react-bootstrap";
 import React, { useState, useEffect} from "react";
-import { Ellipsis } from "react-bootstrap/esm/PageItem";
 
 
 const LOCALIP = "https://pizzap0cket.github.io/pizzaparty/"; // CHANGE THIS BIT
@@ -155,33 +154,8 @@ function App() {
         <Offcanvas.Header closeButton>
           <Offcanvas.Title><Button variant="success" onClick={loginToSpotify}>Menu</Button></Offcanvas.Title>
         </Offcanvas.Header>
-        <Stack>
-          <p>
-            Track
-          </p>
-          <p>Author</p>
-        </Stack>
         <Offcanvas.Body style={{ textAlign: "center" }}>
-
-          
-        {tracks.map((track, i) => {
-          console.log(track);
-          return (
-            <Stack key={`LayoutSongInfo${i}`}  direction="horizontal">
-              <Image key={`Image${i}`} 
-                    className="p-2"
-                    src={track.album.images[0].url}
-                    style={{ width: "60px", height: "auto"}}
-                    rounded
-                  />
-              <Stack key={`SongInfoLayout${i}`} style={{textAlign:"left"}}>
-                <p key={`SongInfo${i}`} style={{paddingTop:2, fontSize:13, display:"inline", overflow:"hidden"}}><b>{track.name}</b>
-                <br/>
-                {track.artists[0].name}</p>
-              </Stack>
-              </Stack>
-          );
-        })}
+          <br/>
         </Offcanvas.Body>
       </Offcanvas>
 
@@ -221,7 +195,7 @@ function App() {
               <Image key={`Image${i}`} 
                     className="p-2"
                     src={track.album.images[0].url}
-                    style={{ width: "80px", height: "auto"}}
+                    style={{ width: "80px", height: "auto" }}
                     rounded
                   />
               <Stack key={`SongInfoLayout${i}`} style={{textAlign:"left"}}>
