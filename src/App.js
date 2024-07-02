@@ -155,7 +155,7 @@ function App() {
     <div className="App">
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Settings</Offcanvas.Title>
+        <Offcanvas.Title>Settings</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body style={{ textAlign: "center" }}>
           <Button variant="success" onClick={loginToSpotify}>Login to Spotify</Button>
