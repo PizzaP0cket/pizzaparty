@@ -153,7 +153,7 @@ function App() {
     <div className="App">
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Settings</Offcanvas.Title>
+          <Offcanvas.Title><Button variant="success" onClick={loginToSpotify}>Menu</Button></Offcanvas.Title>
         </Offcanvas.Header>
         <Stack>
           <p>
