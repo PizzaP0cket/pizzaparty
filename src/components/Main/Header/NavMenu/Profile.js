@@ -1,13 +1,19 @@
 import { useState } from 'react';
 import { Image, Offcanvas } from "react-bootstrap";
 import Authentication from '../../../../utils/auth';
+import QRCode from '../../../../utils/QRCode';
 
 export default function Profile({ profileInfo }) {
 
     const [login, setLoggedIn] = useState(false);
+    const [code, setQRCode] = useState(false);
 
     const handleLogin = () => {
         setLoggedIn(true); // This will trigger Authentication redirection
+    };
+
+    const handleQRCode = () => {
+        setQRCode(true); // This will trigger Authentication redirection
     };
 
     return (
@@ -18,6 +24,7 @@ export default function Profile({ profileInfo }) {
                     <div className="profile-info">
                         <h2 className="profile-name">{!profileInfo.display_name ? ('Please Sign in') : (profileInfo.display_name)}</h2>
                         {!login ? (<button onClick={handleLogin}>Sign in</button>) : (<Authentication />)}
+                        {!code ? (<button onClick={handleQRCode}>QRCode</button>) : (<QRCode />)}
                     </div>
                     <Offcanvas.Header closeButton>
                     </Offcanvas.Header>

@@ -50,36 +50,43 @@ export default function TrackList({ tracks, authToken, loading }) {
 
   return (
     <>
-      <Alert variant={`${alertType}`} show={alert} style={{ position: "fixed", width: "100%", height: "auto", tom: "10px", zIndex: 9999 }}>{alertMessage}</Alert>
-      {loading && tracks.length === 0 ? (<Spinner style={{display:"block", margin:"auto"}} animation="border" variant="success" />) : (<></>)}
+      <Alert variant={alertType} show={alert} style={{ position: "fixed", width: "100%", height: "auto", top: "10px", zIndex: 9999 }}>{alertMessage}</Alert>
+      {loading && tracks.length === 0 ? (<Spinner style={{ display: "block", margin: "auto" }} animation="border" variant="success" />) : null}
 
-      {tracks.map((track, i) => (<>
-        {loading ? (<>
-          <div key={`track-item${i}`} className="track-item">
-            <Button key={`track-image${i}`} className="track-image" alt="track-album" variant="dark" disabled>
+      {tracks.map((track, i) => {
+        const placeholderKeyPrefix = `Placeholder-${i}`;
+        const trackKeyPrefix = `track-${i}`;
+
+        return loading ? (
+          <div key={placeholderKeyPrefix} className="track-item">
+            <Button className="track-image" alt="track-album" variant="dark" disabled>
               <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
             </Button>
-            <div key={`track-details${i}`} className="track-details">
-              <Placeholder key={`track-title${i}`} style={{ width: "100%" }} bg='dark'>Loading...</Placeholder>
-              <p key={`track-artist${i}`} className="track-artist">{track.artists.map(artist => <PlaceHolder key={`track-badge${artist.name}`} bg="success">Loading...</PlaceHolder>)}</p>
+            <div className="track-details">
+              <Placeholder style={{ width: "100%" }} bg='dark'>Loading...</Placeholder>
+              <p className="Placeholder-artist">
+                {track.artists.map(artist => (
+                  <PlaceHolder key={`Placeholder-badge-${artist.name}`} bg="success">Loading...</PlaceHolder>
+                ))}
+              </p>
             </div>
-            <Button key={`addButton${i}`} variant="outline-success" onClick={() => addToQueue(track)}>
-              +
-            </Button>
+            <Button variant="outline-success" onClick={() => addToQueue(track)}>+</Button>
           </div>
-        </>) : (<>
-          <div key={`track-item${i}`} className="track-item">
-            <img key={`track-image${i}`} className="track-image" alt="track-album" src={track.album.images[0].url} />
-            <div key={`track-details${i}`} className="track-details">
-              <p key={`track-title${i}`} className="track-title" >{track.name}</p>
-              <p key={`track-artist${i}`} className="track-artist">{track.artists.map(artist => <Badge key={`track-badge${artist.name}`} bg="success">{artist.name}</Badge>)}</p>
+        ) : (
+          <div key={trackKeyPrefix} className="track-item">
+            <img className="track-image" alt="track-album" src={track.album.images[0].url} />
+            <div className="track-details">
+              <p className="track-title">{track.name}</p>
+              <p className="track-artist">
+                {track.artists.map(artist => (
+                  <Badge key={`track-badge-${artist.name}`} bg="success">{artist.name}</Badge>
+                ))}
+              </p>
             </div>
-            <Button key={`addButton${i}`} variant="outline-success" onClick={() => addToQueue(track)}>
-              +
-            </Button>
+            <Button variant="outline-success" onClick={() => addToQueue(track)}>+</Button>
           </div>
-        </>)}
-      </>))}
+        );
+      })}
     </>
   );
-};
+}
