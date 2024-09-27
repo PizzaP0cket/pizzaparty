@@ -1,34 +1,43 @@
 import React, { useState } from 'react';
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 
-export default function Search({accessToken, onSendData}) {
+export default function Search({ accessToken, onSendData, onLoading }) {
 
     const [searchInput, setSearchInput] = useState("");
 
     async function searchTracks() {
         // GET request using search to get the Artists ID
         if (searchInput === "") {
-            return
-        } else {
-
-            var trackParameters = {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            };
-
-            await fetch(
-                "https://api.spotify.com/v1/search?q=" + searchInput + "&type=track",
-                trackParameters
-            )
-                .then((response) => response.json())
-                .then((data) => {
-                    //setTracks(data.tracks.items);
-                    onSendData(data.tracks.items);
-                });
+            return;
         }
+
+        onLoading(true);
+
+        var trackParameters = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+            },
+        };
+
+        try{
+
+        await fetch(
+            "https://api.spotify.com/v1/search?q=" + searchInput + "&type=track",
+            trackParameters
+        )
+            .then((response) => response.json())
+            .then((data) => {
+                //setTracks(data.tracks.items);
+                onSendData(data.tracks.items);
+            });
+        } catch (error) {
+            console.error('Error fetching tracks:', error);
+        } finally {
+            onLoading(false);
+        }
+
     };
 
     return (

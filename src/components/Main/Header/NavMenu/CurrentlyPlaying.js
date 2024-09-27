@@ -6,7 +6,7 @@ export default function CurrentlyPlaying({ song }) {
     return (
         <>
             {typeof song === 'object' ? (<>
-                {song.album === undefined ? (<><p /><Spinner animation="border" style={{ display: "block", margin: "auto" }} /></>) : (
+                {song.album === undefined ? (<><p /><Spinner animation="border" variant="success" style={{ display: "block", margin: "auto" }} /></>) : (
                     <>
                         <div className='currentlyPlaying'>
                             <div className="currentlyPlaying-item">

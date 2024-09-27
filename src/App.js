@@ -9,9 +9,14 @@ export default function App() {
     const [accessToken, setAccessToken] = useState("");
     const [authToken, setAuthToken] = useState('');
     const [searchedTracks, setSearchedTracks] = useState([]);
+    const [state, setLoading] = useState(false);
 
     const handleSearchedTracks = (data) => {
         setSearchedTracks(data);
+    };
+
+    const handleLoading = (data) => {
+        setLoading(data);
     };
 
     useEffect(() => {
@@ -44,8 +49,8 @@ export default function App() {
     return (
         <>
             <Header authToken={authToken} />
-            <Search accessToken={accessToken} onSendData={handleSearchedTracks} />
-            <TrackList tracks={searchedTracks} authToken={authToken} />
+            <Search accessToken={accessToken} onSendData={handleSearchedTracks} onLoading={handleLoading} />
+            <TrackList tracks={searchedTracks} authToken={authToken} loading={state} />
         </>
     );
 };

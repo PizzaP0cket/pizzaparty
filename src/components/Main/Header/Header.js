@@ -60,7 +60,6 @@ export default function Header({ authToken }) {
                 .then((data) => {
                     setQueuedSongs(data.queue);
                     setCurrentSong(data.currently_playing);
-                    console.log(data)
                 });
     }
 
