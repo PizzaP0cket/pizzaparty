@@ -4,6 +4,7 @@ import Profile from "./Profile";
 import QueuedSongs from "./QueuedSongs";
 
 export default function NavMenu({ song, profileInfo, queuedSongs }) {
+
     return (
         <>
             <Profile profileInfo={profileInfo} />
