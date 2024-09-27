@@ -1,15 +1,30 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import Search from "./components/Main/Search/Search.js";
-//import Header from "./components/Main/Header/Header.js";
+import Search from "./components/Main/Header/Search/Search.js";
 import React, { useEffect, useState } from 'react';
+import Header from "./components/Main/Header/Header.js";
+import TrackList from "./components/Main/Track/TrackList.js";
 
-function App() {
+export default function App() {
 
-    const CLIENT_ID = "353497b40ba74572a39741002907e097";
     const [accessToken, setAccessToken] = useState("");
+    const [authToken, setAuthToken] = useState('');
+    const [searchedTracks, setSearchedTracks] = useState([]);
+
+    const handleSearchedTracks = (data) => {
+        setSearchedTracks(data);
+    };
 
     useEffect(() => {
+        const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
         const CLIENT_SECRET = process.env.REACT_APP_SPOTIFY_API_KEY;
+
+        var authToken = '';
+        if (!window.location.href.split('=')[1]) {
+            console.error("Access token not found in URL");
+        } else {
+            authToken = window.location.href.split('=')[1].split('&')[0];
+            setAuthToken(authToken);
+        }
 
         var authParameters = {
             method: "POST",
@@ -29,9 +44,9 @@ function App() {
 
     return (
         <>
-            <Search item={accessToken} />
+            <Header authToken={authToken} />
+            <Search accessToken={accessToken} onSendData={handleSearchedTracks} />
+            <TrackList tracks={searchedTracks} authToken={authToken} />
         </>
     );
 };
-
-export default App;

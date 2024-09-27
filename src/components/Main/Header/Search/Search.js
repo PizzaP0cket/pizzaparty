@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { InputGroup, FormControl, Button } from "react-bootstrap";
-import TrackList from '../Track/TrackList';
-import Header from '../Header/Header';
 
-function Search(accessToken) {
+export default function Search({accessToken, onSendData}) {
 
     const [searchInput, setSearchInput] = useState("");
-    const [tracks, setTracks] = useState([]);
 
     async function searchTracks() {
         // GET request using search to get the Artists ID
@@ -28,15 +25,15 @@ function Search(accessToken) {
             )
                 .then((response) => response.json())
                 .then((data) => {
-                    setTracks(data.tracks.items);
+                    //setTracks(data.tracks.items);
+                    onSendData(data.tracks.items);
                 });
         }
-    }
+    };
 
     return (
         <>
             <InputGroup className="mb-3" size="lg">
-                <Header />
                 <FormControl
                     placeholder="Search for song"
                     type="input"
@@ -50,9 +47,6 @@ function Search(accessToken) {
                 />
                 <Button variant="outline-success" onClick={() => { searchTracks() }}>Search</Button>
             </InputGroup>
-            <TrackList tracks={tracks} />
         </>
     )
-}
-
-export default Search;
+};

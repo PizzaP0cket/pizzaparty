@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
-function Authentication() {
+export default function Authentication() {
 
     useEffect(() => {
-        //const LOCALIP = "https://pizzap0cket.github.io/pizzaparty/"; // CHANGE THIS BIT
         const CLIENT_ID = "353497b40ba74572a39741002907e097";
-        //const REDIRECT_URI = "https://pizzap0cket.github.io/pizzaparty/";
         const REDIRECT_URI = "https://pizzap0cket.github.io/pizzaparty/"
         const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
         const RESPONSE_TYPE = "token";
@@ -20,5 +18,3 @@ function Authentication() {
         </>
     );
 };
-
-export default Authentication;

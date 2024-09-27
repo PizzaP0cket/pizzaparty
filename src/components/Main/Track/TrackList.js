@@ -2,19 +2,11 @@ import React, { useState } from 'react';
 import { Button, Alert, Badge } from 'react-bootstrap';
 import "./TrackList.css"
 
-const TrackList = ({ tracks }) => {
+export default function TrackList({ tracks, authToken }) {
 
   const [alert, setAlert] = useState(false);
   const [alertType, setAlertType] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
-
-
-  var authToken = '';
-  if (!window.location.href.split('=')[1]) {
-    console.error("Access token not found in URL");
-  } else {
-    authToken = window.location.href.split('=')[1].split('&')[0];
-  }
 
   async function addToQueue(trackID) {
 
@@ -39,7 +31,7 @@ const TrackList = ({ tracks }) => {
           console.log(data.error.status)
         }
         )
-    } catch {
+      } catch {
     }
 
     if (addStatus === 400) {
@@ -64,19 +56,17 @@ const TrackList = ({ tracks }) => {
       <Alert variant={`${alertType}`} show={alert} style={{ position: "fixed", width: "100%", height: "auto", tom: "10px", zIndex: 9999 }}>{alertMessage}</Alert>
 
       {tracks.map((track, i) => (
-          <div key={`track-item${i}`} className="track-item">
-            <img key={`track-image${i}`}  className="track-image" alt="track-album" src={track.album.images[0].url} />
-            <div key={`track-details${i}`} className="track-details">
-              <p key={`track-title${i}`} className="track-title" >{track.name}</p>
-              <p key={`track-artist${i}`} className="track-artist">{track.artists.map(artist => <Badge key={`track-badge${artist.name}`} bg="success">{artist.name}</Badge>)}</p>
-            </div>
-            <Button key={`addButton${i}`} variant="outline-success" onClick={() => addToQueue(track)}>
-              +
-            </Button>
+        <div key={`track-item${i}`} className="track-item">
+          <img key={`track-image${i}`} className="track-image" alt="track-album" src={track.album.images[0].url} />
+          <div key={`track-details${i}`} className="track-details">
+            <p key={`track-title${i}`} className="track-title" >{track.name}</p>
+            <p key={`track-artist${i}`} className="track-artist">{track.artists.map(artist => <Badge key={`track-badge${artist.name}`} bg="success">{artist.name}</Badge>)}</p>
           </div>
+          <Button key={`addButton${i}`} variant="outline-success" onClick={() => addToQueue(track)}>
+            +
+          </Button>
+        </div>
       ))}
     </>
   );
 };
-
-export default TrackList;
