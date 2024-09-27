@@ -18,14 +18,13 @@ export default function App() {
         const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
         const CLIENT_SECRET = process.env.REACT_APP_SPOTIFY_API_KEY;
 
-        var authToken = '';
+            var authToken = '';
         if (!window.location.href.split('=')[1]) {
-            console.error("Access token not found in URL");
         } else {
             authToken = window.location.href.split('=')[1].split('&')[0];
             setAuthToken(authToken);
         }
-
+    
         var authParameters = {
             method: "POST",
             headers: {

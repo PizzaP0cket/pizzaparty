@@ -15,7 +15,7 @@ export default function Search({accessToken, onSendData}) {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: "Bearer " + accessToken.item,
+                    Authorization: `Bearer ${accessToken}`,
                 },
             };
 

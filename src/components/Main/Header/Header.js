@@ -47,24 +47,29 @@ export default function Header({ authToken }) {
     }, [authToken]);
 
     async function getQueueSongs() {
+        if (authToken === '') {
+            setQueuedSongs(undefined);
+            setCurrentSong(undefined);
+        } else {
         try {
-        await fetch(
-            "https://api.spotify.com/v1/me/player/queue", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${authToken}`,
+            await fetch(
+                "https://api.spotify.com/v1/me/player/queue", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${authToken}`,
+                }
             }
-        }
-        )
-            .then((result) => result.json())
-            .then((data) => {
-                setQueuedSongs(data.queue);
-                setCurrentSong(data.currently_playing);
-            });
+            )
+                .then((result) => result.json())
+                .then((data) => {
+                    setQueuedSongs(data.queue);
+                    setCurrentSong(data.currently_playing);
+                });
         } catch (error) {
             console.error("Failed to get queued songs", error);
         }
+    }
     }
 
     return (
