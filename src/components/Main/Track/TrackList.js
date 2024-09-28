@@ -87,3 +87,6 @@ export default function TrackList({ tracks, authToken, loading }) {
     </>
   );
 }
+
+
+// style={{marginRight:"3%"}}

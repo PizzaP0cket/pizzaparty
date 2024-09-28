@@ -42,7 +42,7 @@ export default function Search({ accessToken, onSendData, onLoading }) {
 
     return (
         <>
-            <InputGroup className="mb-3" size="lg">
+            <InputGroup >
                 <FormControl
                     placeholder="Search for song"
                     type="input"

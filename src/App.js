@@ -23,13 +23,13 @@ export default function App() {
         const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
         const CLIENT_SECRET = process.env.REACT_APP_SPOTIFY_API_KEY;
 
-            var authToken = '';
+        var authToken = '';
         if (!window.location.href.split('=')[1]) {
         } else {
             authToken = window.location.href.split('=')[1].split('&')[0];
             setAuthToken(authToken);
         }
-    
+
         var authParameters = {
             method: "POST",
             headers: {
@@ -48,8 +48,10 @@ export default function App() {
 
     return (
         <>
-            <Header authToken={authToken} />
-            <Search accessToken={accessToken} onSendData={handleSearchedTracks} onLoading={handleLoading} />
+             <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <Header authToken={authToken} />
+                <Search accessToken={accessToken} onSendData={handleSearchedTracks} onLoading={handleLoading} />
+            </div>
             <TrackList tracks={searchedTracks} authToken={authToken} loading={state} />
         </>
     );
