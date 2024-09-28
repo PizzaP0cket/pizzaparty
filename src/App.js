@@ -3,6 +3,7 @@ import Search from "./components/Main/Header/Search/Search.js";
 import React, { useEffect, useState } from 'react';
 import Header from "./components/Main/Header/Header.js";
 import TrackList from "./components/Main/Track/TrackList.js";
+import Tutorial from "./components/Main/Track/Tutorial.js";
 
 export default function App() {
 
@@ -48,11 +49,14 @@ export default function App() {
 
     return (
         <>
-             <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <Header authToken={authToken} />
                 <Search accessToken={accessToken} onSendData={handleSearchedTracks} onLoading={handleLoading} />
             </div>
             <TrackList tracks={searchedTracks} authToken={authToken} loading={state} />
+            {searchedTracks.length === 0 ? (
+                <><Tutorial /></>
+            ) : (<></>)}
         </>
     );
 };
