@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Offcanvas, Navbar } from "react-bootstrap";
+import NavMenu from './NavMenu/NavMenu'
 import './Header.css';
-
-// Components
-import NavMenu from './NavMenu/NavMenu';
 
 export default function Header({ authToken }) {
 
@@ -69,7 +67,7 @@ export default function Header({ authToken }) {
                 <Navbar.Toggle onClick={() => { handleShow(); getQueueSongs() }} />
             </Navbar>
 
-            <Offcanvas show={show} onHide={handleClose}>
+            <Offcanvas show={show} onHide={handleClose} >
                 <NavMenu song={currentSong} profileInfo={profileInfo} queuedSongs={queuedSongs} />
             </Offcanvas>
         </>

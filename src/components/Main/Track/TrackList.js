@@ -65,12 +65,9 @@ export default function TrackList({ tracks, authToken, loading }) {
             <div className="track-details">
               <Placeholder style={{ width: "100%" }} bg='dark'>Loading...</Placeholder>
               <p className="Placeholder-artist">
-                {track.artists.map(artist => (
-                  <PlaceHolder key={`Placeholder-badge-${artist.name}`} bg="success">Loading...</PlaceHolder>
-                ))}
+                  <PlaceHolder bg="success">Loading...</PlaceHolder>
               </p>
             </div>
-            <Button variant="outline-success" onClick={() => addToQueue(track)}>+</Button>
           </div>
         ) : (
           <div key={trackKeyPrefix} className="track-item">

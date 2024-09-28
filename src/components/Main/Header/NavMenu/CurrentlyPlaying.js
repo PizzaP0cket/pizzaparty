@@ -1,12 +1,15 @@
 import { Image, Badge, Spinner } from "react-bootstrap";
 import Soundwave from "./SoundWave.js";
 
-export default function CurrentlyPlaying({ song }) {
+export default function CurrentlyPlaying({song}) {
 
+    if (song === null){
+        song = '';
+    }
     return (
         <>
             {typeof song === 'object' ? (<>
-                {song.album === undefined ? (<><p /><Spinner animation="border" variant="success" style={{ display: "block", margin: "auto" }} /></>) : (
+                { song.album === undefined ? (<><p /><Spinner animation="border" variant="success" style={{ display: "block", margin: "auto" }} /></>) : (
                     <>
                         <div className='currentlyPlaying'>
                             <div className="currentlyPlaying-item">
@@ -20,7 +23,9 @@ export default function CurrentlyPlaying({ song }) {
                             </div>
                         </div>
                     </>)}
-            </>) : (<></>)}
+            </>) : (<>
+            <p>Make sure you have a device playing spotify</p>
+            </>)}
         </>
     );
 }
