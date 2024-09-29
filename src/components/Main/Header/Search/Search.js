@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 
-export default function Search({ accessToken, onSendData, onLoading }) {
+export default function Search({ accessToken, onSendData, onLoading, color }) {
 
     const [searchInput, setSearchInput] = useState("");
 
@@ -22,7 +22,6 @@ export default function Search({ accessToken, onSendData, onLoading }) {
         };
 
         try{
-
         await fetch(
             "https://api.spotify.com/v1/search?q=" + searchInput + "&type=track",
             trackParameters
@@ -36,6 +35,7 @@ export default function Search({ accessToken, onSendData, onLoading }) {
             console.error('Error fetching tracks:', error);
         } finally {
             onLoading(false);
+            document.getElementById('searchBar').value = '';
         }
 
     };
@@ -44,6 +44,7 @@ export default function Search({ accessToken, onSendData, onLoading }) {
         <>
             <InputGroup >
                 <FormControl
+                    id="searchBar"
                     placeholder="Search for song"
                     type="input"
                     required
@@ -54,7 +55,7 @@ export default function Search({ accessToken, onSendData, onLoading }) {
                     }}
                     onChange={(event) => setSearchInput(event.target.value)}
                 />
-                <Button variant="outline-success" onClick={() => { searchTracks() }}>Search</Button>
+                <Button  style={{background:`rgb(${color[2].toString()}`, borderColor:`rgb(${color[2].toString()}`}} onClick={() => { searchTracks() }}>Search</Button>
             </InputGroup>
         </>
     )

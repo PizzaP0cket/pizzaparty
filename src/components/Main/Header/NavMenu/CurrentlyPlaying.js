@@ -1,30 +1,32 @@
 import { Image, Badge, Spinner } from "react-bootstrap";
 import Soundwave from "./SoundWave.js";
 
-export default function CurrentlyPlaying({song}) {
+export default function CurrentlyPlaying({song, color}) {
 
-    if (song === null){
-        song = '';
+    if (song === undefined) {
+        return(<></>);
     }
+    
     return (
         <>
-            {typeof song === 'object' ? (<>
-                { song.album === undefined ? (<><p /><Spinner animation="border" variant="success" style={{ display: "block", margin: "auto" }} /></>) : (
+            {song !== null ? (<>
+                { song.album === undefined ? (<><p /><Spinner animation="border" style={{ display: "block", margin: "auto", color:`rgb(${color[2].toString()}`}} /></>) : (
                     <>
-                        <div className='currentlyPlaying'>
+                        <div className='currentlyPlaying' style={{background:`rgba(${color[3].toString()}, 20%)`}}>
                             <div className="currentlyPlaying-item">
                                 <Image key={`Image${0}`} className="rotate" src={song.album.images[0].url} roundedCircle />
                                 <div className="currentPlaying-details">
-                                    <Soundwave />
+                                    <Soundwave color={color} currentSong={song} />
                                     <p className="currentPlaying-title" >{song.name}</p>
                                     <p className="currentPlaying-artist">{song.artists.map(artist =>
-                                        <Badge key={`playlist-${artist.name}`} bg='success'>{artist.name}</Badge>)}</p>
+                                        <Badge key={`playlist-${artist.name}`} bg="" style={{background:`rgb(${color[2].toString()})`}}  >{artist.name}</Badge>)}</p>
                                 </div>
                             </div>
                         </div>
                     </>)}
             </>) : (<>
-            <p>Make sure you have a device playing spotify</p>
+                <p></p>
+                <p style={{textAlign:"center"}}>Make sure you have a device playing spotify</p>
             </>)}
         </>
     );

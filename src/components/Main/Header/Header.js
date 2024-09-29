@@ -3,7 +3,7 @@ import { Offcanvas, Navbar } from "react-bootstrap";
 import NavMenu from './NavMenu/NavMenu'
 import './Header.css';
 
-export default function Header({ authToken }) {
+export default function Header({ authToken, color }) {
 
     const [profileInfo, setProfile] = useState([]);
     const [queuedSongs, setQueuedSongs] = useState([]);
@@ -68,7 +68,7 @@ export default function Header({ authToken }) {
             </Navbar>
 
             <Offcanvas show={show} onHide={handleClose} >
-                <NavMenu song={currentSong} profileInfo={profileInfo} queuedSongs={queuedSongs} />
+                <NavMenu song={currentSong} profileInfo={profileInfo} queuedSongs={queuedSongs} color={color}/>
             </Offcanvas>
         </>
     )

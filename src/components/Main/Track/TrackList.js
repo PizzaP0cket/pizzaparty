@@ -3,7 +3,7 @@ import { Button, Alert, Badge, Placeholder, Spinner } from 'react-bootstrap';
 import PlaceHolder from 'react-bootstrap/Placeholder';
 import "./TrackList.css"
 
-export default function TrackList({ tracks, authToken, loading }) {
+export default function TrackList({ tracks, authToken, loading, color}) {
 
   const [alert, setAlert] = useState(false);
   const [alertType, setAlertType] = useState("");
@@ -33,7 +33,7 @@ export default function TrackList({ tracks, authToken, loading }) {
 
     if (addStatus === 400) {
       setAlertType("danger");
-      setAlertMessage(`Song not added - check access token`)
+      setAlertMessage(`Song not added - need to login`)
       setAlert(true);
       setTimeout(() => {
         setAlert(false);
@@ -51,7 +51,7 @@ export default function TrackList({ tracks, authToken, loading }) {
   return (
     <>
       <Alert variant={alertType} show={alert} style={{ position: "fixed", width: "100%", height: "auto", top: "10px", zIndex: 9999 }}>{alertMessage}</Alert>
-      {loading && tracks.length === 0 ? (<Spinner style={{ display: "block", margin: "auto" }} animation="border" variant="success" />) : null}
+      {loading && tracks.length === 0 ? (<Spinner style={{ display: "block", margin: "auto", color:`rgb(${color[2].toString()}`}} animation="border" />) : null}
 
       {tracks.map((track, i) => {
         const placeholderKeyPrefix = `Placeholder-${i}`;
@@ -65,7 +65,7 @@ export default function TrackList({ tracks, authToken, loading }) {
             <div className="track-details">
               <Placeholder style={{ width: "100%" }} bg='dark'>Loading...</Placeholder>
               <p className="Placeholder-artist">
-                  <PlaceHolder bg="success">Loading...</PlaceHolder>
+                  <PlaceHolder bg="" style={{background:`rgb(${color[2].toString()})`}}>Loading...</PlaceHolder>
               </p>
             </div>
           </div>
@@ -76,11 +76,11 @@ export default function TrackList({ tracks, authToken, loading }) {
               <p className="track-title">{track.name}</p>
               <p className="track-artist">
                 {track.artists.map(artist => (
-                  <Badge key={`track-badge-${artist.name}`} bg="success">{artist.name}</Badge>
+                  <Badge key={`track-badge-${artist.name}`} bg="" style={{background:`rgb(${color[2].toString()})`}}>{artist.name}</Badge>
                 ))}
               </p>
             </div>
-            <Button variant="outline-success" onClick={() => addToQueue(track)}>+</Button>
+            <Button style={{background:`rgb(${color[2].toString()})`, borderColor:`rgb(${color[2].toString()})`}} onClick={() => addToQueue(track)}>+</Button>
           </div>
         );
       })}

@@ -1,6 +1,7 @@
 import { Badge } from "react-bootstrap";
+import QueuedSongsTutorial from "./QueuedSongsTutorial";
 
-export default function QueuedSongs({ queuedSongs }) {
+export default function QueuedSongs({ queuedSongs, color }) {
 
     function convertMsToMmSs(msString) {
         const ms = parseInt(msString, 10); // Convert string to an integer
@@ -26,7 +27,7 @@ export default function QueuedSongs({ queuedSongs }) {
                                 <img src={songs.album.images[0].url} alt="Playlist" className="playlist-image" />
                                 <div className="playlist-details">
                                     <p className="playlist-title">{songs.name}</p>
-                                    <p className="playlist-artist">{songs.artists.map(artist => <Badge key={`playlist-${artist.name}`} bg="success">{artist.name}</Badge>)}</p>
+                                    <p className="playlist-artist">{songs.artists.map(artist => <Badge key={`playlist-${artist.name}`} bg="" style={{background:`rgb(${color[2].toString()})`}} >{artist.name}</Badge>)}</p>
                                 </div>
                                 <p className="playlist-duration">{convertMsToMmSs(songs.duration_ms)}</p>
                             </div>
@@ -34,7 +35,7 @@ export default function QueuedSongs({ queuedSongs }) {
                     );
                 })
             ) : (
-                <p>No songs queued</p>
+                <QueuedSongsTutorial />
             )}
         </>
     )
