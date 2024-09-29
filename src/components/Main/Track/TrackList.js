@@ -33,7 +33,7 @@ export default function TrackList({ tracks, authToken, loading, color}) {
 
     if (addStatus === 400) {
       setAlertType("danger");
-      setAlertMessage(`Song not added - need to login`)
+      setAlertMessage(`Song not added - need to sign in`)
       setAlert(true);
       setTimeout(() => {
         setAlert(false);
@@ -65,7 +65,7 @@ export default function TrackList({ tracks, authToken, loading, color}) {
             <div className="track-details">
               <Placeholder style={{ width: "100%" }} bg='dark'>Loading...</Placeholder>
               <p className="Placeholder-artist">
-                  <PlaceHolder bg="" style={{background:`rgb(${color[2].toString()})`}}>Loading...</PlaceHolder>
+                  <PlaceHolder bg="" style={{background: `linear-gradient(to bottom right, rgb(${color[2].toString()}), rgb(${color[4].toString()}))`}}>Loading...</PlaceHolder>
               </p>
             </div>
           </div>
@@ -76,11 +76,11 @@ export default function TrackList({ tracks, authToken, loading, color}) {
               <p className="track-title">{track.name}</p>
               <p className="track-artist">
                 {track.artists.map(artist => (
-                  <Badge key={`track-badge-${artist.name}`} bg="" style={{background:`rgb(${color[2].toString()})`}}>{artist.name}</Badge>
+                  <Badge key={`track-badge-${artist.name}`} bg="" style={{background: `linear-gradient(to bottom right, rgb(${color[2].toString()}), rgb(${color[4].toString()}))`}}>{artist.name}</Badge>
                 ))}
               </p>
             </div>
-            <Button style={{background:`rgb(${color[2].toString()})`, borderColor:`rgb(${color[2].toString()})`}} onClick={() => addToQueue(track)}>+</Button>
+            <Button style={{background: `linear-gradient(to bottom right, rgb(${color[2].toString()}), rgb(${color[4].toString()}))`, borderColor:`rgb(${color[2].toString()})`}} onClick={() => addToQueue(track)}>+</Button>
           </div>
         );
       })}

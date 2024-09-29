@@ -55,7 +55,7 @@ export default function Search({ accessToken, onSendData, onLoading, color }) {
                     }}
                     onChange={(event) => setSearchInput(event.target.value)}
                 />
-                <Button  style={{background:`rgb(${color[2].toString()}`, borderColor:`rgb(${color[2].toString()}`}} onClick={() => { searchTracks() }}>Search</Button>
+                <Button  style={{background: `linear-gradient(to bottom right, rgb(${color[2].toString()}), rgb(${color[4].toString()}))`, borderColor:`rgb(${color[2].toString()}`}} onClick={() => { searchTracks() }}>Search</Button>
             </InputGroup>
         </>
     )

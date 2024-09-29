@@ -18,13 +18,13 @@ export default function Profile({ profileInfo, color }) {
 
     return (
         <>
-            <div className="profile-container" style={{background:`rgb(${color[4].toString()}`}}>
+            <div className="profile-container" style={{background: `linear-gradient(to bottom right, rgb(${color[2].toString()}), rgb(${color[4].toString()}))`}}>
                 <header className="profile-header">
                     {profileInfo.images && profileInfo.images.length > 0 ? (<Image key={`Image${0}`} src={profileInfo.images[1].url} alt="Profile" className="profile-avatar" />) : (<img src="https://via.placeholder.com/150" alt="Profile" className="profile-avatar" />)}
                     <div className="profile-info">
                         <h2 className="profile-name" style={{color:`rgb(${color[0].toString()}`}} >{!profileInfo.display_name ? ('Please Sign in') : (profileInfo.display_name)}</h2>
-                        {!login ? (<Button style={{background:`rgb(${color[2].toString()}`, border:"0px"}} onClick={handleLogin}>Sign in</Button>) : (<Authentication />)}
-                        {!code ? (<Button style={{background:`rgb(${color[2].toString()}`, border:"0px"}} onClick={handleQRCode}>QRCode</Button>) : (<QRCode />)}
+                        {!login ? (<Button style={{background: `linear-gradient(to bottom right, rgb(${color[2].toString()}), rgb(${color[4].toString()}))`, border:"0px"}} onClick={handleLogin}>Sign in</Button>) : (<Authentication />)}
+                        {!code ? (<Button style={{background: `linear-gradient(to bottom right, rgb(${color[2].toString()}), rgb(${color[4].toString()}))`, border:"0px"}} onClick={handleQRCode}>QRCode</Button>) : (<QRCode />)}
                     </div>
                     <Offcanvas.Header closeButton>
                     </Offcanvas.Header>

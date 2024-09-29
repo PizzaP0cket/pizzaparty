@@ -12,6 +12,8 @@ export default function Header({ authToken, color }) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    console.log(color)
+
     useEffect(() => {
         if (authToken === '') {
         } else {

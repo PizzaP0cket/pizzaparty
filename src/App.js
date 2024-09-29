@@ -10,22 +10,30 @@ export default function App() {
     const [authToken, setAuthToken] = useState('');
     const [searchedTracks, setSearchedTracks] = useState([]);
     const [isLoading, setLoading] = useState(false);
-    const [colourMind, setColour] = useState('');
+    //const [colourMind, setColour] = useState('');     // Issue accessing API from GitHub
 
-    const fetchColours = async () => {
-        var colorParameter = {
-            method: "POST",
-            body: JSON.stringify({ model: "ui" })
-        };
-        try {
-            await fetch("http://colormind.io/api/", colorParameter)
-                .then((result) => result.json())
-                .then((data) => setColour(data.result))
-        } catch (error) {
-            console.error("Trouble loading colours", error);
-        }
+    //const colourMind = [[ 251, 251, 251 ],[ 238, 138, 59 ],[ 239, 119, 73 ],[ 124, 141, 177 ],[ 54, 59, 100 ]]
+    //const colourMind = [[ 247, 248, 246 ],[ 243, 179, 27 ],[ 134, 190, 200 ],[ 145, 138, 153 ],[ 69, 81, 100 ]]
+    //const colourMind = [[ 247, 248, 246 ],[ 243, 179, 27 ],[ 130, 113, 140 ],[ 145, 138, 153 ],[ 43, 71, 91 ]]
 
-    };
+    const colourMind = [[ 247, 247, 246 ],[ 99, 160, 200 ],[ 230, 61, 55 ],[ 199, 113, 137 ],[ 30, 34, 57 ]]
+
+
+    // Issue accessing ColorMind API from GitHub
+
+    // const fetchColours = async () => {
+    //     var colorParameter = {
+    //         method: "POST",
+    //         body: JSON.stringify({ model: "ui" })
+    //     };
+    //     try {
+    //         await fetch("http://colormind.io/api/", colorParameter)
+    //             .then((result) => result.json())
+    //             .then((data) => setColour(data.result))
+    //     } catch (error) {
+    //         console.error("Trouble loading colours", error);
+    //     }
+    // };
 
     const fetchAccessToken = async () => {
         const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
@@ -63,16 +71,18 @@ export default function App() {
             setAuthToken(authToken);
         }
 
-        fetchColours();
+        //fetchColours();
         fetchAccessToken();
 
     }, []);
 
-    if (colourMind[0] === undefined) {
-        return (
-            <>loading...</>
-        )
-    }
+    // Issue accessing ColorMind API from GitHub
+
+    // if (colourMind[0] === undefined) {
+    //     return (
+    //         <>loading...</>
+    //     )
+    // }
 
     return (
         <>

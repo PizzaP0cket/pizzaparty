@@ -45,6 +45,7 @@ export default function Tutorial({ color }) {
                             <p style={{ textAlign: "center", margin: "0 5px 0 " }}>Use the menu to view currently playing and queued songs</p>
                         </div>
                 </Carousel.Item>
+                {/*  Issue with ColorMind API connecting to GitHub
                 <Carousel.Item>
                         <div style={{ textAlign: "center", margin: "100px 5px 0 " }}>
                             <p >Not a fan of the colour scheme?</p>
@@ -55,7 +56,7 @@ export default function Tutorial({ color }) {
                                 );
                             })}
                         </div>
-                </Carousel.Item>
+                </Carousel.Item> */}
             </Carousel>
         </>
     )
