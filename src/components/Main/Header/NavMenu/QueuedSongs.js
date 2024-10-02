@@ -1,4 +1,3 @@
-import { Badge } from "react-bootstrap";
 import QueuedSongsTutorial from "./QueuedSongsTutorial";
 
 export default function QueuedSongs({ queuedSongs, color }) {
@@ -27,7 +26,7 @@ export default function QueuedSongs({ queuedSongs, color }) {
                                 <img src={songs.album.images[0].url} alt="Playlist" className="playlist-image" />
                                 <div className="playlist-details">
                                     <p className="playlist-title">{songs.name}</p>
-                                    <p className="playlist-artist">{songs.artists.map(artist => <Badge key={`playlist-${artist.name}`} bg="" style={{background: `linear-gradient(to bottom right, rgb(${color[2].toString()}), rgb(${color[4].toString()}))`}} >{artist.name}</Badge>)}</p>
+                                    <p className="playlist-artist">{songs.artists.map((artist, i) => <span key={`playlist-${artist.name}`} >{artist.name}{i < songs.artists.length - 1 && ', '}</span>)}</p>
                                 </div>
                                 <p className="playlist-duration">{convertMsToMmSs(songs.duration_ms)}</p>
                             </div>
