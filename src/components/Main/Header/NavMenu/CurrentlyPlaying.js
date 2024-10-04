@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Image, Badge, Spinner } from "react-bootstrap";
+import { Image, Spinner } from "react-bootstrap";
 import ProgressBar from 'react-bootstrap/ProgressBar';
-import Soundwave from "./SoundWave.js";
+//import QueuedSongsTutorial from "./QueuedSongsTutorial";
 
 export default function CurrentlyPlaying({ song, color }) {
 
@@ -48,71 +48,57 @@ export default function CurrentlyPlaying({ song, color }) {
             }, 1000);
             return () => clearInterval(interval); // Cleanup on unmount
         }
-
-
     }, [song]);
 
+    //<QueuedSongsTutorial /><
 
-    if (song.item === undefined) {
-        return (<></>)
-    }
+     if (song.item === undefined) {
+         return (<></>)
+     }
 
     return (
         <>
             {song.item !== null ? (<>
                 {song.item.album === undefined ? (<><p /><Spinner animation="border" style={{ display: "block", margin: "auto", color: `rgb(${color[2].toString()}` }} /></>) : (
                     <>
-                        <div className='currentlyPlaying' >
-                            <div className="currentlyPlaying-item">
-                                <Image key={`Image${0}`} className="rotate" src={song.item.album.images[0].url} />
-                                <div className="currentPlaying-details">
-                                    <Soundwave color={color} currentSong={song.item} />
-                                    <p className="currentPlaying-title" >{song.item.name}</p>
-                                    <p className="currentPlaying-artist">{song.item.artists.map(artist =>
-                                        <Badge key={`playlist-${artist.name}`} bg="" style={{ background: `linear-gradient(to bottom right, rgb(${color[2].toString()}), rgb(${color[4].toString()}))` }}  >{artist.name}</Badge>)}</p>
+                        <div style={{ 
+                       backgroundImage: `linear-gradient(160deg, rgba(${color[1].toString()},1) 0%, rgba(${color[4].toString()},1) 100%)`, boxShadow: "0px 2px 20px 0px rgba(0,0,0,0.5)" 
+                        , width: "auto", height: "150px", borderRadius: "0 50px 0 0" }}>
+                            <p style={{marginLeft:"10px", marginTop:"10px", marginBottom:"0px", color: `rgb(${color[0].toString()}`}}><b>Now Playing:</b></p>
+                        <div style={{ marginLeft: "20px", marginTop: "5px", display: "flex" }}>
+                            <Image key={`Image${0}`} src={song.item.album.images[0].url}
+                                style={{
+                                    width: "100px",
+                                    height: "100px",
+                                    borderRadius: "0px",
+                                    boxShadow: "0px 2px 20px 0px rgba(0,0,0,0.5)",
+                                    transition: "0.5s"
+                                }} />
+                            <div style={{ flexGrow: "1", marginLeft: "10px", maxWidth:"68%"  }}>
+                                <div className="scrolling-title-container">
+                                <span className={"scrolling-title"} style={{ marginTop: "25px", marginBottom:"5px" , color: `rgb(${color[0].toString()}`}}><b>{song.item.name}</b></span>
                                 </div>
+                                <p style={{ marginTop: "-7px", color: `rgb(${color[0].toString()}`, fontSize: "0.8em", whiteSpace: "nowrap",overflow: "hidden",textOverflow: "ellipsis"
+                                 }}>{song.item.artists.map((artist, i) => <span key={`playlist-${artist.name}`} >{artist.name}{i < song.item.artists.length - 1 && ', '}</span>)}</p>
+                                <ProgressBar now={progress} variant='success' style={{ color:`rgb(${color[3].toString()}`, boxShadow: "0px 2px 20px 0px rgba(0,0,0,0.5)", height: "5px", marginRight: "10px", marginTop: "-10px"}} />
+                                <div style={{ display: "flex", marginTop:"5px", fontSize: "0.8em", color: `rgb(${color[0].toString()}` }}>
+                                    <p style={{ flex: 1, }}>{convertMsToMmSs(song.progress_ms + timeElapsed)}</p>
+                                    <p style={{ marginRight: "10px" }}>-{convertMsToMmSs(song.item.duration_ms - (song.progress_ms + timeElapsed - 1000))}</p>
+                                </div>
+                                
                             </div>
-                            <div >
-                                <p>{convertMsToMmSs(song.progress_ms + timeElapsed)}</p>
-                                <ProgressBar now={progress} />
-                                <p>{convertMsToMmSs(song.item.duration_ms - (song.progress_ms + timeElapsed))}</p>
-                            </div>
+                            
                         </div>
+                        </div>
+                        
                     </>)}
             </>) : (<>
                 <p></p>
                 <p style={{ textAlign: "center" }}>Make sure you have a device playing spotify</p>
-            </>)}
+            </>)
+            }
         </>
     );
 }
 
-//     return (
-//         <>
-//             {song.item !== null ? (<>
-//                 {song.item.album === undefined ? (<><p /><Spinner animation="border" style={{ display: "block", margin: "auto", color: `rgb(${color[2].toString()}` }} /></>) : (
-//                     <>
-//                         <div className='currentlyPlaying' style={{ background: `linear-gradient(to bottom , rgb(${color[1].toString()}), rgb(${color[3].toString()}))` }}>
-//                             <div className="currentlyPlaying-item">
-//                                 <Image key={`Image${0}`} className="rotate" src={song.item.album.images[0].url} roundedCircle />
-//                                 <div className="currentPlaying-details">
-//                                     <Soundwave color={color} currentSong={song.item} />
-//                                     <p className="currentPlaying-title" >{song.item.name}</p>
-//                                     <p className="currentPlaying-artist">{song.item.artists.map(artist =>
-//                                         <Badge key={`playlist-${artist.name}`} bg="" style={{ background: `linear-gradient(to bottom right, rgb(${color[2].toString()}), rgb(${color[4].toString()}))` }}  >{artist.name}</Badge>)}</p>
-//                                 </div>
-//                             </div>
-//                             <div >
-//                                 <p>{convertMsToMmSs(song.progress_ms + timeElapsed)}</p>
-//                                 <ProgressBar now={progress} />
-//                                 <p>{convertMsToMmSs(song.item.duration_ms - (song.progress_ms + timeElapsed))}</p>
-//                             </div>
-//                         </div>
-//                     </>)}
-//             </>) : (<>
-//                 <p></p>
-//                 <p style={{ textAlign: "center" }}>Make sure you have a device playing spotify</p>
-//             </>)}
-//         </>
-//     );
-// }
+

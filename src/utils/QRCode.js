@@ -6,8 +6,8 @@ export default function QRCodeGenerator() {
 
     return (
         <>
-            <div style={{ marginTop: '20px'}}>
-                {<QRCodeSVG style={{border: '2px solid white' }} value={currentURL} />}
+            <div>
+                {<QRCodeSVG style={{border: '3px solid white', boxShadow:"0px 2px 5px 0px rgba(0,0,0,0.5)" }} size={"10em"} value={currentURL} />}
             </div>
         </>
     );

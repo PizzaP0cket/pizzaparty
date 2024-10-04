@@ -19,7 +19,7 @@ body {
   height: 65px;
   border-radius: 50%;
   padding:5px;
-  background:green;
+  box-shadow:5px 2px 5px 0px rgba(0,0,0,0.5);
 }
 
 .profile-info {
@@ -27,11 +27,13 @@ body {
 }
 
 .profile-name {
-  font-size: 0.8em;
+  font-size: 80%;
   background-color: green;
   border-radius: 25px 0px 0px 25px;
   padding: 8px;
   margin-right: -8px;
+  box-shadow:0px 2px 5px 0px rgba(0,0,0,0.5);
+
 }
 
 
@@ -137,7 +139,7 @@ body {
 
 .currentPlaying-artist {
   color: #888;
-  font-size: 0.8em;
+  font-size: 0.7em;
   white-space: nowrap;
   /* Prevent text from wrapping */
   overflow: hidden;
@@ -147,6 +149,8 @@ body {
   max-width: 250px;
   /* Set a maximum width to trigger the ellipsis */
 }
+
+
 
 /* Optionally, you can tweak max-width based on your layout */
 
@@ -188,92 +192,12 @@ body {
   animation-delay: calc(-0.1s * var(--i));
 }
 
-.bar:nth-child(1) {
-  --i: 1;
-}
-
-.bar:nth-child(2) {
-  --i: 2;
-}
-
-.bar:nth-child(3) {
-  --i: 3;
-}
-
-.bar:nth-child(4) {
-  --i: 4;
-}
-
-.bar:nth-child(5) {
-  --i: 5;
-}
-
-.bar:nth-child(6) {
-  --i: 6;
-}
-
-.bar:nth-child(7) {
-  --i: 7;
-}
-
-.bar:nth-child(8) {
-  --i: 8;
-}
-
-.bar:nth-child(9) {
-  --i: 9;
-}
-
-.bar:nth-child(10) {
-  --i: 10;
-}
-
-.bar:nth-child(11) {
-  --i: 11;
-}
-
-.bar:nth-child(12) {
-  --i: 12;
-}
-
-.bar:nth-child(13) {
-  --i: 13;
-}
-
-.bar:nth-child(14) {
-  --i: 14;
-}
-
-.bar:nth-child(15) {
-  --i: 15;
-}
-
-.bar:nth-child(16) {
-  --i: 16;
-}
-
-.bar:nth-child(17) {
-  --i: 17;
-}
-
-@keyframes bounce {
-
-  0%,
-  100% {
-    transform: scaleY(0.3);
-  }
-
-  50% {
-    transform: scaleY(1);
-  }
-}
-
 
 .search-bar {
   display: flex;
   align-items: center;
   background-color: #f0f0f5;
-  border-radius: 12px;
+  border-radius: 25px;
   padding: 8px 12px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   width: auto; /* Adjust as necessary */
@@ -281,7 +205,9 @@ body {
   margin-top: 5px;
   margin-left:25px;
   margin-right: 25px;
-  z-index: 99999;
+  z-index: 1;
+  position:sticky;
+  top: 20px
 }
 
 .search-input {
@@ -317,23 +243,19 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+
   
   .fac {
     width: 40px;
     height: 120px;
     border-radius: 25px;
     position: absolute;
-    background: #fff;
     z-index: 2;
     padding: 0.5rem 0.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    opacity: 0;
     top: 60px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     align-items: center;
-    transition: opacity 0.2s ease-in, top 0.2s ease-in, width 0.1s ease-in;
     
     /*&::after {
       content: "";
@@ -348,17 +270,7 @@ body {
       transform: rotate(45deg);
       z-index: 0;
     }*/
-    
-    a {
-      color: var(--icon-color);
-      opacity: 0.8;
-      
-      &:hover {
-        transition: 0.2s;
-        opacity: 1;
-        color: darken(#344955, 2%);
-      }
-    }
+
   }
   
   input {
@@ -379,7 +291,7 @@ body {
         width: 40px;
         height: 120px;
         animation: fac-animation 0.4s ease-out forwards 0.1s;
-        top: 70px;
+        top: 60px;
         opacity: 1;
       }
     }
@@ -398,5 +310,54 @@ body {
   }
   100% {
     transform: scale(1, 1);
+  }
+}
+
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.QRcode {
+  margin-top: 10em;
+  margin-left: 50px;
+  display: flex;
+}
+
+.centered-image {
+  max-width: 90%; /* Responsive width */
+  max-height: 90%; /* Responsive height */
+}
+
+
+
+.scrolling-title-container {
+  width: 100%; /* Set the container width */
+  overflow: hidden; /* Hide overflow to ensure scrolling effect */
+  white-space: nowrap; /* Prevent the title from wrapping */
+  position: relative;
+}
+
+.scrolling-title {
+  display: inline-block;
+  padding-left: 100%; /* Start the scrolling off-screen */
+  animation: marquee 10s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
   }
 }

@@ -1,6 +1,5 @@
-import QueuedSongsTutorial from "./QueuedSongsTutorial";
 
-export default function QueuedSongs({ queuedSongs, color }) {
+export default function QueuedSongs({ queuedSongs }) {
 
     function convertMsToMmSs(msString) {
         const ms = parseInt(msString, 10); // Convert string to an integer
@@ -23,7 +22,7 @@ export default function QueuedSongs({ queuedSongs, color }) {
                     return (
                         <section className="playlist-section" key={`QueueSongInfo${i}`}>
                             <div className="playlist-item">
-                                <img src={songs.album.images[0].url} alt="Playlist" className="playlist-image" />
+                                <img src={songs.album.images[2].url} alt="Playlist" className="playlist-image" />
                                 <div className="playlist-details">
                                     <p className="playlist-title">{songs.name}</p>
                                     <p className="playlist-artist">{songs.artists.map((artist, i) => <span key={`playlist-${artist.name}`} >{artist.name}{i < songs.artists.length - 1 && ', '}</span>)}</p>
@@ -33,8 +32,7 @@ export default function QueuedSongs({ queuedSongs, color }) {
                         </section>
                     );
                 })
-            ) : (
-                <QueuedSongsTutorial />
+            ) : ( <></>
             )}
         </>
     )

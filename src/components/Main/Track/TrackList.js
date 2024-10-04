@@ -8,8 +8,15 @@ export default function TrackList({ tracks, authToken, loading, color }) {
   const [alert, setAlert] = useState(false);
   const [alertType, setAlertType] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
+  const [isLoading, setLoading] = useState(false);
+
+  const handleLoading = (data) => {
+    setLoading(data);
+  };
 
   async function addToQueue(trackID) {
+
+    handleLoading(true);
 
     var queueParameters = {
       method: "POST",
@@ -29,6 +36,8 @@ export default function TrackList({ tracks, authToken, loading, color }) {
           addStatus = data.error.status
         })
     } catch {
+    } finally {
+      setLoading(false);
     }
 
     if (addStatus === 400) {
@@ -50,6 +59,7 @@ export default function TrackList({ tracks, authToken, loading, color }) {
 
   return (
     <>
+      <Spinner hidden={!isLoading} style={{ position: "fixed", margin: "auto", top: "10px", left: "50%", zIndex: 9999, color: `rgb(${color[2].toString()}` }} animation="grow" />
       <Alert variant={alertType} show={alert} style={{ position: "fixed", width: "100%", height: "auto", top: "10px", zIndex: 9999 }}>{alertMessage}</Alert>
       {loading && tracks.length === 0 ? (<Spinner style={{ display: "block", margin: "auto", color: `rgb(${color[2].toString()}` }} animation="border" />) : null}
 
@@ -70,23 +80,20 @@ export default function TrackList({ tracks, authToken, loading, color }) {
             </div>
           </div>
         ) : (
-            <div key={trackKeyPrefix} className="track-item">
-              <img className="track-image" alt="track-album" src={track.album.images[0].url} />
-              <div className="track-details">
-                <p className="track-title">{track.name}</p>
-                <p className="track-artist">
-                  {track.artists.map((artist, i) =>
-                    <span key={`track-badge-${artist.name}`}>{artist.name}{i < track.artists.length - 1 && ', '}</span>
-                  )}
-                </p>
-              </div>
-              <Button style={{ background: `linear-gradient(to bottom right, rgb(${color[2].toString()}), rgb(${color[4].toString()}))`, borderColor: `rgb(${color[2].toString()})` }} onClick={() => addToQueue(track)}>+</Button>
+          <div key={trackKeyPrefix} className="track-item">
+            <img className="track-image" alt="track-album" src={track.album.images[0].url} />
+            <div className="track-details">
+              <p className="track-title">{track.name}</p>
+              <p className="track-artist">
+                {track.artists.map((artist, i) =>
+                  <span key={`track-badge-${artist.name}`}>{artist.name}{i < track.artists.length - 1 && ', '}</span>
+                )}
+              </p>
             </div>
+            <Button style={{ backgroundColor: `rgb(${color[2].toString()})`, border: "none", boxShadow: "0px 2px 5px 0px rgba(0,0,0,0.5)" }} onClick={() => addToQueue(track)}>+</Button>
+          </div>
         );
       })}
     </>
   );
 }
-
-
-// style={{marginRight:"3%"}}

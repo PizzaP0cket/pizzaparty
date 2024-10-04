@@ -1,0 +1,70 @@
+/* ProfileComponent.css */
+
+.flex-container {
+    display: flex;
+    align-items: center;
+}
+
+.profile-name {
+    color: rgb(var(--color-0));
+    background-color: rgb(var(--color-2));
+}
+
+.wrapper {
+    position: relative;
+}
+
+.checkbox {
+    height: 100%;
+    width: 100%;
+    border-radius: var(--borderRadius);
+    cursor: pointer;
+    position: absolute;
+    z-index: 5;
+    opacity: 0;
+}
+
+.profile-avatar {
+    background-color: rgb(var(--color-2));
+}
+
+.fac {
+    /* Add any necessary styles for the fac class */
+}
+
+.button {
+    background-image: linear-gradient(180deg, rgba(var(--color-2), 1) 0%, rgba(var(--color-3), 1) 100%);
+    box-shadow: 5px 2px 5px 0px rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50px;
+    padding: 10px;
+    color: rgb(var(--color-0));
+}
+
+.button-disabled {
+    opacity: 0.5; /* To show disabled state */
+}
+
+.qr-button {
+    margin-top: 5px;
+}
+
+.overlay {
+    /* Styles for the overlay */
+}
+
+.QRcode {
+    /* Styles for the QR code container */
+}
+
+.centered-image {
+    /* Styles for the centered QR code image */
+}
+
+.close-button {
+    max-height: 40px;
+    max-width: 40px;
+    background-color: rgb(var(--color-2));
+    border: none;
+    border-radius: 0px 10px 10px 0px;
+}
