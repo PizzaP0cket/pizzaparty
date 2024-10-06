@@ -1,0 +1,75 @@
+.queueLoading {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    z-Index: 9999;
+}
+
+.alert {
+    position: fixed;
+    width: 100%;
+    max-width: 1000px;
+    height: auto;
+    top: 10px;
+    z-index: 1000;
+}
+
+.loadingTrack {
+    display: block;
+    margin: auto;
+}
+
+.track-item {
+    display: flex;
+    align-items: center;
+    padding: 0px;
+    margin: 0 3% 2.5px 3%;
+    border-bottom: 1px solid #ddd;
+}
+
+.track-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 25%;
+    margin-right: 10px;
+    margin-bottom: 2.5px;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+.track-details {
+    flex-grow: 1;
+    min-width: 0;
+    /* Ensure text can shrink */
+}
+
+.track-title {
+    font-size: 1.1em;
+    margin-top: 2.5px;
+    margin-bottom: 0;
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+    overflow: hidden;
+    /* Hide any overflow */
+    text-overflow: ellipsis;
+    /* Add ellipsis (...) for overflowed text */
+    max-width: 100%;
+    /* Set a maximum width to trigger the ellipsis */
+}
+
+.track-artist {
+    color: #888;
+    font-size: 0.9em;
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+    overflow: hidden;
+    /* Hide any overflow */
+    text-overflow: ellipsis;
+    /* Add ellipsis (...) for overflowed text */
+    max-width: 100%;
+    /* Set a maximum width to trigger the ellipsis */
+}
+
+.addButton {
+    border: none;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
+}

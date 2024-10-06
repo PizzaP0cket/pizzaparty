@@ -22,6 +22,7 @@ export default function QueuedSongs({ queuedSongs }) {
                     return (
                         <section className="playlist-section" key={`QueueSongInfo${i}`}>
                             <div className="playlist-item">
+                            <span style={{ marginRight: "10px", width: "20px", display: "inline-block" }}>{i + 1}.</span>
                                 <img src={songs.album.images[2].url} alt="Playlist" className="playlist-image" />
                                 <div className="playlist-details">
                                     <p className="playlist-title">{songs.name}</p>

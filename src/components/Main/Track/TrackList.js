@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Alert, Placeholder, Spinner } from 'react-bootstrap';
 import PlaceHolder from 'react-bootstrap/Placeholder';
-import "./TrackList.css"
 
 export default function TrackList({ tracks, authToken, loading, color }) {
 
@@ -10,31 +9,21 @@ export default function TrackList({ tracks, authToken, loading, color }) {
   const [alertMessage, setAlertMessage] = useState("");
   const [isLoading, setLoading] = useState(false);
 
+  //
   const handleLoading = (data) => {
     setLoading(data);
   };
 
+  //
   async function addToQueue(trackID) {
 
     handleLoading(true);
-
-    var queueParameters = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + authToken,
-      },
-    };
-
     let addStatus;
+
     try {
-      await fetch(
-        `https://api.spotify.com/v1/me/player/queue?uri=` + trackID.uri,
-        queueParameters
-      ).then((result) => result.json())
-        .then((data) => {
-          addStatus = data.error.status
-        })
+      await fetch(`https://api.spotify.com/v1/me/player/queue?uri=` + trackID.uri, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${authToken}` } })
+        .then((result) => result.json())
+        .then((data) => { addStatus = data.error.status })
     } catch {
     } finally {
       setLoading(false);
@@ -59,17 +48,15 @@ export default function TrackList({ tracks, authToken, loading, color }) {
 
   return (
     <>
-      <Spinner hidden={!isLoading} style={{ position: "fixed", margin: "auto", top: "10px", left: "50%", zIndex: 9999, color: `rgb(${color[2].toString()}` }} animation="grow" />
-      <Alert variant={alertType} show={alert} style={{ position: "fixed", width: "100%", height: "auto", top: "10px", zIndex: 9999 }}>{alertMessage}</Alert>
-      {loading && tracks.length === 0 ? (<Spinner style={{ display: "block", margin: "auto", color: `rgb(${color[2].toString()}` }} animation="border" />) : null}
-
+      <Spinner className='queueLoading' hidden={!isLoading} style={{ color: `rgb(${color[2].toString()}` }} animation="grow" />
+      <Alert className='alert' variant={alertType} show={alert} >{alertMessage}</Alert>
+      {loading && tracks.length === 0 ? (<Spinner className='loadingTrack' style={{ color: `rgb(${color[2].toString()}` }} animation="border" />) : null}
       {tracks.map((track, i) => {
         const placeholderKeyPrefix = `Placeholder-${i}`;
         const trackKeyPrefix = `track-${i}`;
-
         return loading ? (
           <div key={placeholderKeyPrefix} className="track-item">
-            <Button className="track-image" alt="track-album" variant="dark" disabled>
+            <Button className="track-image" variant="dark" disabled>
               <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
             </Button>
             <div className="track-details">
@@ -90,7 +77,7 @@ export default function TrackList({ tracks, authToken, loading, color }) {
                 )}
               </p>
             </div>
-            <Button style={{ backgroundColor: `rgb(${color[2].toString()})`, border: "none", boxShadow: "0px 2px 5px 0px rgba(0,0,0,0.5)" }} onClick={() => addToQueue(track)}>+</Button>
+            <Button className='addButton' style={{ backgroundColor: `rgb(${color[2].toString()})` }} onClick={() => addToQueue(track)}>+</Button>
           </div>
         );
       })}

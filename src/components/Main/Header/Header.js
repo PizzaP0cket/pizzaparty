@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Offcanvas, Navbar } from "react-bootstrap";
 import NavMenu from './NavMenu/NavMenu'
-import './Header.css';
 import Profile from './NavMenu/Profile';
 
 export default function Header({ authToken, color }) {
@@ -21,67 +20,44 @@ export default function Header({ authToken, color }) {
         setProgress(0);
     }
 
+    //
     async function fetchProfile(authToken) {
         try {
-            await fetch(
-                "https://api.spotify.com/v1/me", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${authToken}`,
-                }
-            }
-            )
+            await fetch("https://api.spotify.com/v1/me", { method: "GET", headers: { "Content-Type": "application/json", Authorization: `Bearer ${authToken}`, } })
                 .then((result) => result.json())
-                .then((data) => {
-                    setProfile(data)
-                })
+                .then((data) => { setProfile(data) })
         } catch (error) {
-            console.error("Failed to fetch profile", error);
+            console.error("Failed to fetch profile", error)
         }
-    }
-    
-    async function getQueueSongs() {
-        await fetch(
-            "https://api.spotify.com/v1/me/player/queue?limit=30", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${authToken}`,
-            }
-        }
-        )
-            .then((result) => result.json())
-            .then((data) => {
-                setQueuedSongs(data.queue)
-            });
     }
 
+    //
+    async function getQueueSongs() {
+        try {
+            await fetch("https://api.spotify.com/v1/me/player/queue?limit=30", { method: "GET", headers: { "Content-Type": "application/json", Authorization: `Bearer ${authToken}` } })
+                .then((result) => result.json())
+                .then((data) => { setQueuedSongs(data.queue) })
+        } catch (error) {
+            console.error("Trouble getting queuedSongs", error);
+        }
+    }
+
+    //
     async function getCurrentSong() {
         try {
             await fetch(
-                "https://api.spotify.com/v1/me/player/currently-playing/", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${authToken}`,
-                }
-            })
+                "https://api.spotify.com/v1/me/player/currently-playing/", { method: "GET", headers: { "Content-Type": "application/json", Authorization: `Bearer ${authToken}` } })
                 .then((result) => result.json())
-                .then((data) => {
-                    setCurrentSong(data);
-                });
+                .then((data) => { setCurrentSong(data) })
         } catch (error) {
-            console.error("No current song playing", error);
+            console.error("No current song playing", error)
         }
     }
 
     useEffect(() => {
-        if (authToken === '') {
-        } else {
-            fetchProfile(authToken);
-        }
+        if (authToken === '') { } else { fetchProfile(authToken) };
 
+        //
         if (currentSong.item === undefined) {
         } else {
             if (!currentSong || !currentSong.item || currentSong.item.duration_ms === 0) {
@@ -110,17 +86,15 @@ export default function Header({ authToken, color }) {
 
     return (
         <>
-            <div style={{ display: "flex", paddingTop: "5px", paddingRight: "5px" }}>
-                <Navbar expand="md-3" style={{ flex: "1" }}>
-                    <Navbar.Toggle onClick={() => { handleShow(); getQueueSongs(); getCurrentSong(); }} style={{ background: "none", marginBottom: "10px", border: "none", color: `rgb(${color[4].toString()})`, }}><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" className="bi bi-list" viewBox="0 0 16 16">
-                        <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
-                    </svg>
+            <div className='main'>
+                <Navbar expand="md-3" className='navBar'>
+                    <Navbar.Toggle className="navBarToggle" onClick={() => { handleShow(); getQueueSongs(); getCurrentSong(); }} style={{ color: `rgb(${color[4].toString()})`}}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" className="bi bi-list" viewBox="0 0 16 16"><path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" /></svg>
                     </Navbar.Toggle>
-                    <p style={{ flex: "1", color: `rgb(${color[1].toString()})`, display: "flex", fontSize: "20px", paddingTop: "5px", alignItems: "center" }}><b>PizzaParty</b></p>
+                    <p className="title" style={{ color: `rgb(${color[1].toString()})` }}>PizzaParty</p>
                 </Navbar>
-                <Profile profileInfo={profileInfo} color={color} style={{ flex: "1" }} />
+                <Profile profileInfo={profileInfo} color={color} />
             </div>
-
             <Offcanvas show={show} onHide={handleClose} style={{ background: "none", border: "none" }} >
                 <NavMenu song={currentSong} profileInfo={profileInfo} queuedSongs={queuedSongs} color={color} />
             </Offcanvas>

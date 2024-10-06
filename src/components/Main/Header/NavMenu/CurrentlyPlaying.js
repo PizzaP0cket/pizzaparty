@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { Image, Spinner } from "react-bootstrap";
+import { Image } from "react-bootstrap";
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import AuthTimer from "./AuthTimer";
+
 //import QueuedSongsTutorial from "./QueuedSongsTutorial";
 
 export default function CurrentlyPlaying({ song, color }) {
@@ -50,55 +52,40 @@ export default function CurrentlyPlaying({ song, color }) {
         }
     }, [song]);
 
-    //<QueuedSongsTutorial /><
-
-     if (song.item === undefined) {
-         return (<></>)
-     }
+    if (song.item === undefined) {
+        return (<></>)
+    }
 
     return (
         <>
-            {song.item !== null ? (<>
-                {song.item.album === undefined ? (<><p /><Spinner animation="border" style={{ display: "block", margin: "auto", color: `rgb(${color[2].toString()}` }} /></>) : (
-                    <>
-                        <div style={{ 
-                       backgroundImage: `linear-gradient(160deg, rgba(${color[1].toString()},1) 0%, rgba(${color[4].toString()},1) 100%)`, boxShadow: "0px 2px 20px 0px rgba(0,0,0,0.5)" 
-                        , width: "auto", height: "150px", borderRadius: "0 50px 0 0" }}>
-                            <p style={{marginLeft:"10px", marginTop:"10px", marginBottom:"0px", color: `rgb(${color[0].toString()}`}}><b>Now Playing:</b></p>
-                        <div style={{ marginLeft: "20px", marginTop: "5px", display: "flex" }}>
-                            <Image key={`Image${0}`} src={song.item.album.images[0].url}
-                                style={{
-                                    width: "100px",
-                                    height: "100px",
-                                    borderRadius: "0px",
-                                    boxShadow: "0px 2px 20px 0px rgba(0,0,0,0.5)",
-                                    transition: "0.5s"
-                                }} />
-                            <div style={{ flexGrow: "1", marginLeft: "10px", maxWidth:"68%"  }}>
-                                <div className="scrolling-title-container">
-                                <span className={"scrolling-title"} style={{ marginTop: "25px", marginBottom:"5px" , color: `rgb(${color[0].toString()}`}}><b>{song.item.name}</b></span>
-                                </div>
-                                <p style={{ marginTop: "-7px", color: `rgb(${color[0].toString()}`, fontSize: "0.8em", whiteSpace: "nowrap",overflow: "hidden",textOverflow: "ellipsis"
-                                 }}>{song.item.artists.map((artist, i) => <span key={`playlist-${artist.name}`} >{artist.name}{i < song.item.artists.length - 1 && ', '}</span>)}</p>
-                                <ProgressBar now={progress} variant='success' style={{ color:`rgb(${color[3].toString()}`, boxShadow: "0px 2px 20px 0px rgba(0,0,0,0.5)", height: "5px", marginRight: "10px", marginTop: "-10px"}} />
-                                <div style={{ display: "flex", marginTop:"5px", fontSize: "0.8em", color: `rgb(${color[0].toString()}` }}>
-                                    <p style={{ flex: 1, }}>{convertMsToMmSs(song.progress_ms + timeElapsed)}</p>
-                                    <p style={{ marginRight: "10px" }}>-{convertMsToMmSs(song.item.duration_ms - (song.progress_ms + timeElapsed - 1000))}</p>
-                                </div>
-                                
+
+            <div className="currentlyPlaying-Container" style={{ backgroundImage: `linear-gradient(160deg, rgba(${color[1].toString()},1) 0%, rgba(${color[4].toString()},1) 100%)` }}>
+                <div className="currentlyPlaying-Details-Container">
+                    <Image className="currentlyPlaying-Image" key={`Image${0}`} src={song.item.album.images[0].url} />
+                    <div className="currentlyPlaying-Details" >
+                        <div className="scrolling-title-container">
+                            <span className={"scrolling-title"} style={{ color: `rgb(${color[0].toString()}` }}>{song.item.name}</span>
+                        </div>
+                        <p className="currentlyPlaying-Artist" style={{ color: `rgb(${color[0].toString()}` }}>{song.item.artists.map((artist, i) => <span key={`playlist-${artist.name}`} >{artist.name}{i < song.item.artists.length - 1 && ', '}</span>)}</p>
+                        {song.is_playing ? (<>
+                            <ProgressBar className="progressBar" now={progress} variant='success' style={{ color: `rgb(${color[3].toString()}` }} />
+                            <div className="songTime" style={{ color: `rgb(${color[0].toString()}` }}>
+                                <p className="progressed" >{convertMsToMmSs(song.progress_ms + timeElapsed)}</p>
+                                <p className="remaining" >-{convertMsToMmSs(song.item.duration_ms - (song.progress_ms + timeElapsed - 1000))}</p>
                             </div>
-                            
+                        </>) : (<>
+                            <ProgressBar className="progressBar" now={((song.progress_ms - 1000) / song.item.duration_ms )*100} variant='success' style={{ color: `rgb(${color[3].toString()}` }} />
+                            <div className="songTime" style={{ color: `rgb(${color[0].toString()}` }}>
+                                <p className="progressed" >{convertMsToMmSs(song.progress_ms)}</p>
+                                <p className="remaining" >-{convertMsToMmSs(song.item.duration_ms - (song.progress_ms - 1000))}</p>
+                            </div>
+                        </>)}
+                        <div className="timeRemaining" style={{ backgroundImage: `linear-gradient(160deg, rgba(${color[2].toString()},1) 0%, rgba(${color[4].toString()},1) 100%)` }}>
+                            <AuthTimer color={color} />
                         </div>
-                        </div>
-                        
-                    </>)}
-            </>) : (<>
-                <p></p>
-                <p style={{ textAlign: "center" }}>Make sure you have a device playing spotify</p>
-            </>)
-            }
+                    </div>
+                </div>
+            </div>
         </>
     );
 }
-
-
