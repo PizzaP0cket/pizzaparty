@@ -18,32 +18,30 @@ export default function TrackList({ tracks, authToken, loading, color }) {
   async function addToQueue(trackID) {
 
     handleLoading(true);
-    let addStatus;
+    let status = null;
+    let time = 2500;
 
-    try {
-      await fetch(`https://api.spotify.com/v1/me/player/queue?uri=` + trackID.uri, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${authToken}` } })
-        .then((result) => result.json())
-        .then((data) => { addStatus = data.error.status })
-    } catch {
-    } finally {
+      const response = await fetch(`https://api.spotify.com/v1/me/player/queue?uri=` + trackID.uri, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${authToken}` } })
+      status = response.status;
+      if (status === 200) {
+        setAlertType('success')
+        setAlertMessage(`${trackID.name} added to queue!`)
+        time = 1500;
+      } else if (status === 400) {
+        setAlertType("danger");
+        setAlertMessage(`Song not added - need to sign in`)
+      } else if (status === 404) {
+        setAlertType("warning")
+        setAlertMessage(`Song not added - make sure device is playing music`)
+      } else {
+        setAlertType("danger")
+        setAlertMessage(`Song not added`)
+      }
+
+      setAlert(true);
+      setTimeout(() => {setAlert(false);}, time);
       setLoading(false);
-    }
 
-    if (addStatus === 400) {
-      setAlertType("danger");
-      setAlertMessage(`Song not added - need to sign in`)
-      setAlert(true);
-      setTimeout(() => {
-        setAlert(false);
-      }, 1500);
-    } else {
-      setAlertType("success");
-      setAlertMessage(`${trackID.name} has been added`);
-      setAlert(true);
-      setTimeout(() => {
-        setAlert(false);
-      }, 1500);
-    }
   }
 
   return (
