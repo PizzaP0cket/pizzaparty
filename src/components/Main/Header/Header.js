@@ -91,7 +91,7 @@ export default function Header({ authToken, color }) {
                     <Navbar.Toggle className="navBarToggle" onClick={() => { handleShow(); getQueueSongs(); getCurrentSong(); }} style={{ color: `rgb(${color[4].toString()})`}}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" className="bi bi-list" viewBox="0 0 16 16"><path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" /></svg>
                     </Navbar.Toggle>
-                    <p className="title" style={{ color: `rgb(${color[1].toString()})` }}>PizzaParty</p>
+                    <p className="title" style={{ color: `rgb(${color[1].toString()})` }}></p>
                 </Navbar>
                 <Profile profileInfo={profileInfo} color={color} />
             </div>

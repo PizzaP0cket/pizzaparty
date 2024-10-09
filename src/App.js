@@ -102,7 +102,7 @@ export default function App() {
                 <div className="menuStyle">
                 <Search accessToken={accessToken} onSendData={handleSearchedTracks} onLoading={handleLoading} color={colourMind} />
                 <TrackList tracks={searchedTracks} authToken={authToken} loading={isLoading} color={colourMind} />
-                </div>
+                </div>     
                 {searchedTracks.length === 0 ? (
                     <></>
                 ) : (<>

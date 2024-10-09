@@ -52,7 +52,7 @@ export default function TrackList({ tracks, authToken, loading, color }) {
       {tracks.map((track, i) => {
         const placeholderKeyPrefix = `Placeholder-${i}`;
         const trackKeyPrefix = `track-${i}`;
-        return loading ? (
+        return loading ? (      
           <div key={placeholderKeyPrefix} className="track-item">
             <Button className="track-image" variant="dark" disabled>
               <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
