@@ -15,7 +15,6 @@ export default function NavMenu({ song, queuedSongs, color }) {
                 </div>) : (<></>)}
                 <QueuedSongs queuedSongs={queuedSongs} color={color} />
             </Offcanvas.Body>
-
         </>
     )
 };

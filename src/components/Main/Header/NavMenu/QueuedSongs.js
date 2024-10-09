@@ -33,7 +33,8 @@ export default function QueuedSongs({ queuedSongs }) {
                         </section>
                     );
                 })
-            ) : ( <></>
+            ) : ( <>
+            </>
             )}
         </>
     )

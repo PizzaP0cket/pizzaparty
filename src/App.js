@@ -3,7 +3,7 @@ import Search from "./components/Main/Header/Search/Search.js";
 import React, { useEffect, useState } from 'react';
 import Header from "./components/Main/Header/Header.js";
 import TrackList from "./components/Main/Track/TrackList.js";
-//import Tutorial from "./components/Main/Track/Tutorial.js";
+import Tutorial from "./components/Main/Track/Tutorial.js";
 
 // CSS
 import "./utils/css/App.css";
@@ -104,7 +104,7 @@ export default function App() {
                 <TrackList tracks={searchedTracks} authToken={authToken} loading={isLoading} color={colourMind} />
                 </div>     
                 {searchedTracks.length === 0 ? (
-                    <></>
+                    <><Tutorial  color={colourMind} /></>
                 ) : (<>
                 </>)}
             </div>
