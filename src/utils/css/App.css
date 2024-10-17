@@ -3,3 +3,64 @@
     margin: 0 auto;
     max-width: 900px;
 }
+
+.scroll-container {
+    height: 100%;
+}
+
+.scroll-container-right {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.scroll-item {
+    padding: 5px 5px 0px 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+    border-radius: 10px;
+    white-space: nowrap;
+    max-width: 300px;
+}
+
+.album-artist {
+    font-size: 0.9em;
+    height: 150px;
+    width: 150px;
+    border-radius: 10px;
+}
+
+.album-button {
+    background: none;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.album-tracks {
+    border-top: 1px solid #ddd;
+    padding: 5px;
+    display: flex;
+}
+
+.album-track-title {
+    font-size: 1.1em;
+    margin-top: 2.5px;
+    margin-left: 10px;
+    margin-bottom: 0;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden;    /* Hide any overflow */
+    text-overflow: ellipsis; /* Add ellipsis (...) for overflowed text */
+    max-width: 100%;    /* Set a maximum width to trigger the ellipsis */
+}
+
+.album-playlist-duration {
+    font-size: 0.8em;
+    color: #888;
+    flex: 3;
+    text-align: right;
+}
+
+
+

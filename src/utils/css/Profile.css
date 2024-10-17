@@ -59,10 +59,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
   }
 
-  input {
+  .disabled-fac {
+    position: absolute;
+    z-index: 0;
+  }
+
+  .input {
     height: 100%;
     width: 100%;
     border-radius: var(--border-radius);
