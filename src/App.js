@@ -112,7 +112,7 @@ export default function App() {
 
     // TODO: Condition, when timer runs out
     // TODO: Condition, when session token has changed
-    if (window.location.href === LOCALIP) {
+    if (window.location.href === LOCALIP || window.location.href === 'http://localhost:3000/pizzaparty' || window.location.href === 'http://192.168.86.27:3000/pizzaparty') {
         return (<>
             <Login />
         </>);
