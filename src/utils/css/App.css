@@ -64,3 +64,15 @@
 
 
 
+.scroll-container {
+    width: 100%;              /* Container width */
+    overflow-x: auto;         /* Allow horizontal scrolling */
+    white-space: nowrap;      /* Prevent wrapping of items */
+    padding-bottom: 15px;
+  }
+
+  .LoopingScroll {
+    overflow-x: auto;
+    white-space: nowrap;
+    max-width: 200px;
+  }

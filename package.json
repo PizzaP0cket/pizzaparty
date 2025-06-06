@@ -2,8 +2,14 @@
   "name": "client",
   "version": "0.1.0",
   "homepage": "https://pizzap0cket.github.io/pizzaparty/",
+  "proxy": "https://api.spotify.com",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
+    "@google/generative-ai": "^0.21.0",
+    "@mui/icons-material": "^6.1.9",
+    "@mui/material": "^6.1.9",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -11,12 +17,15 @@
     "bootstrap": "^5.3.3",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.4.5",
+    "init": "^0.1.2",
+    "lucide-react": "^0.513.0",
+    "npx": "^10.2.2",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.26.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -46,6 +55,9 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.1.1"
+    "autoprefixer": "^10.4.21",
+    "gh-pages": "^6.1.1",
+    "postcss": "^8.5.4",
+    "tailwindcss": "^4.1.8"
   }
 }
