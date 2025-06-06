@@ -37,7 +37,6 @@ export default function AuthTimer() {
 
         // If time is up, return '00:00'
         if (timeLeft <= 0) {
-            window.local.href = window.location.href.split("#")[0]
             return '00:00';
         } else {
             return `${formattedMinutes}:${formattedSeconds}`;

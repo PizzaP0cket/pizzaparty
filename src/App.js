@@ -12,6 +12,8 @@ import Login from './components/Login.jsx';
 // API Keys
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const CLIENT_SECRET = process.env.REACT_APP_SPOTIFY_API_KEY;
+const LOCALIP = "https://pizzap0cket.github.io/pizzaparty/"; // CHANGE THIS BIT
+
 
 export default function App() {
     const [accessToken, setAccessToken] = useState(""); // SPOTIFY APP
@@ -63,7 +65,7 @@ export default function App() {
             });
 
             if (response.status === 401) {
-                window.location.href = 'http://192.168.68.62:3001/pizzaparty/'
+                window.location.href = LOCALIP
                 throw new Error(`Invalid access token: ${response.status}`);
             } else if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -110,7 +112,7 @@ export default function App() {
 
     // TODO: Condition, when timer runs out
     // TODO: Condition, when session token has changed
-    if (window.location.href === 'http://192.168.86.27:3000/' || window.location.href === 'http://localhost:3000/pizzaparty') {
+    if (window.location.href === LOCALIP) {
         return (<>
             <Login />
         </>);
