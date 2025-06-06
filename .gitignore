@@ -3,6 +3,10 @@
 # api keys
 .env
 
+# localhost
+localhost-key.pem
+localhost.pem
+
 # dependencies
 /node_modules
 /.pnp
