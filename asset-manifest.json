@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/pizzaparty/static/js/main.222596ae.js",
+    "main.js": "/pizzaparty/static/js/main.be1e8b0f.js",
     "index.html": "/pizzaparty/index.html",
-    "main.222596ae.js.map": "/pizzaparty/static/js/main.222596ae.js.map"
+    "main.be1e8b0f.js.map": "/pizzaparty/static/js/main.be1e8b0f.js.map"
   },
   "entrypoints": [
-    "static/js/main.222596ae.js"
+    "static/js/main.be1e8b0f.js"
   ]
 }
