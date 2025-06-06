@@ -12,6 +12,7 @@ const QRScanner = () => {
     useEffect(() => {
         const getCameraStream = async () => {
             try {
+                // Request access to the back camera
                 const stream = await navigator.mediaDevices.getUserMedia({
                     video: { facingMode: { ideal: 'environment' } }
                 });
@@ -20,7 +21,7 @@ const QRScanner = () => {
                     videoRef.current.srcObject = stream;
                 }
                 streamRef.current = stream;
-                setHasCamera(true); // Camera is available
+                setHasCamera(true); // Camera is available, so we can proceed with QR scanning
             } catch (err) {
                 console.error('Error accessing camera:', err);
                 setHasError(true);
@@ -37,7 +38,7 @@ const QRScanner = () => {
     }, []);
 
     useEffect(() => {
-        if (!hasCamera || !videoLoaded) return;
+        if (!hasCamera || !videoLoaded) return; // Don't run the scanning logic if no camera is available
 
         const interval = setInterval(() => {
             if (!videoRef.current || !canvasRef.current) return;
@@ -45,11 +46,6 @@ const QRScanner = () => {
             const video = videoRef.current;
             const canvas = canvasRef.current;
             const ctx = canvas.getContext('2d');
-
-            if (video.videoWidth === 0 || video.videoHeight === 0) {
-                console.log('Video dimensions are not available yet');
-                return;
-            }
 
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
@@ -65,13 +61,12 @@ const QRScanner = () => {
                 if (text.startsWith('http')) {
                     window.location.href = text;
                 }
-
                 clearInterval(interval); // Stop scanning after a successful scan
             }
-        }, 500);
+        }, 500); // Scan every 0.5 seconds
 
         return () => clearInterval(interval);
-    }, [hasCamera, videoLoaded]);
+    }, [hasCamera, videoLoaded]); // Re-run the effect when camera becomes available
 
     const handleVideoLoad = () => {
         // Once the video is loaded, set the videoLoaded flag to true
@@ -88,14 +83,8 @@ const QRScanner = () => {
 
     return (
         <div>
-            <video
-                ref={videoRef}
-                autoPlay
-                playsInline
-                muted
-                style={{ width: '100%' }}
-                onLoadedMetadata={handleVideoLoad} // Trigger when video metadata is loaded
-            />
+            <video ref={videoRef} autoPlay playsInline muted style={{ width: '100%' }}
+                onLoadedMetadata={handleVideoLoad} />
             <canvas ref={canvasRef} style={{ display: 'none' }} />
         </div>
     );
