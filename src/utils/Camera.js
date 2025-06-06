@@ -1,27 +1,28 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import jsQR from 'jsqr';
 
-const QRScanner = () => {
-    const videoRef = useRef(null);
-    const canvasRef = useRef(null);
-    const streamRef = useRef(null);
+const CameraComponent = () => {
     const [hasError, setHasError] = useState(false);
+    const videoRef = useRef(null);  // Reference to the video element
+    const streamRef = useRef(null);  // Reference to store the media stream
     const [hasCamera, setHasCamera] = useState(false); // Flag to check if camera is available
     const [videoLoaded, setVideoLoaded] = useState(false); // To track when video dimensions are ready
 
     useEffect(() => {
+        // Function to get the video stream
         const getCameraStream = async () => {
             try {
-                // Request access to the back camera
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: { ideal: 'environment' } }
-                });
+                // Request access to the camera
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
 
+                // Attach the stream to the video element
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
                 }
+
+                // Save the stream reference for cleanup later
                 streamRef.current = stream;
-                setHasCamera(true); // Camera is available, so we can proceed with QR scanning
+                setHasCamera(true); // Camera is available
             } catch (err) {
                 console.error('Error accessing camera:', err);
                 setHasError(true);
@@ -30,43 +31,13 @@ const QRScanner = () => {
 
         getCameraStream();
 
+        // Cleanup function to stop the stream when the component unmounts
         return () => {
             if (streamRef.current) {
                 streamRef.current.getTracks().forEach((track) => track.stop());
             }
         };
     }, []);
-
-    useEffect(() => {
-        if (!hasCamera || !videoLoaded) return; // Don't run the scanning logic if no camera is available
-
-        const interval = setInterval(() => {
-            if (!videoRef.current || !canvasRef.current) return;
-
-            const video = videoRef.current;
-            const canvas = canvasRef.current;
-            const ctx = canvas.getContext('2d');
-
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const code = jsQR(imageData.data, canvas.width, canvas.height);
-
-            if (code) {
-                const text = code.data;
-                console.log('QR Code found:', text);
-
-                if (text.startsWith('http')) {
-                    window.location.href = text;
-                }
-                clearInterval(interval); // Stop scanning after a successful scan
-            }
-        }, 500); // Scan every 0.5 seconds
-
-        return () => clearInterval(interval);
-    }, [hasCamera, videoLoaded]); // Re-run the effect when camera becomes available
 
     const handleVideoLoad = () => {
         // Once the video is loaded, set the videoLoaded flag to true
@@ -83,11 +54,16 @@ const QRScanner = () => {
 
     return (
         <div>
-            <video ref={videoRef} autoPlay playsInline muted style={{ width: '100%' }}
-                onLoadedMetadata={handleVideoLoad} />
-            <canvas ref={canvasRef} style={{ display: 'none' }} />
+            <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                muted
+                style={{ width: '100%' }}
+                onLoadedMetadata={handleVideoLoad} // Trigger when video metadata is loaded
+            />
         </div>
     );
 };
 
-export default QRScanner;
+export default CameraComponent;
