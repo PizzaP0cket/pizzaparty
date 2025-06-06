@@ -73,6 +73,7 @@ const CameraComponent = () => {
 
                 if (text.startsWith('http')) {
                     window.location.href = text;
+                    window.location.reload();
                 }
 
                 clearInterval(interval); // Stop scanning after a successful scan
