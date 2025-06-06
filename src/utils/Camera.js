@@ -5,8 +5,6 @@ const CameraComponent = () => {
     const [hasError, setHasError] = useState(false);
     const videoRef = useRef(null);  // Reference to the video element
     const streamRef = useRef(null);  // Reference to store the media stream
-    const [hasCamera, setHasCamera] = useState(false); // Flag to check if camera is available
-    const [videoLoaded, setVideoLoaded] = useState(false); // To track when video dimensions are ready
 
     useEffect(() => {
         // Function to get the video stream
@@ -22,9 +20,8 @@ const CameraComponent = () => {
 
                 // Save the stream reference for cleanup later
                 streamRef.current = stream;
-                setHasCamera(true); // Camera is available
             } catch (err) {
-                console.error('Error accessing camera:', err);
+                console.error('Error accessing camera: ', err);
                 setHasError(true);
             }
         };
@@ -34,34 +31,19 @@ const CameraComponent = () => {
         // Cleanup function to stop the stream when the component unmounts
         return () => {
             if (streamRef.current) {
-                streamRef.current.getTracks().forEach((track) => track.stop());
+                const tracks = streamRef.current.getTracks();
+                tracks.forEach(track => track.stop());
             }
         };
     }, []);
 
-    const handleVideoLoad = () => {
-        // Once the video is loaded, set the videoLoaded flag to true
-        setVideoLoaded(true);
-    };
-
     if (hasError) {
-        return <p>Could not access the camera.</p>;
-    }
-
-    if (!hasCamera) {
-        return <p>No camera found or permission denied. Please ensure the device has a camera.</p>;
+        return <p>There was an error accessing the camera.</p>;
     }
 
     return (
         <div>
-            <video
-                ref={videoRef}
-                autoPlay
-                playsInline
-                muted
-                style={{ width: '100%' }}
-                onLoadedMetadata={handleVideoLoad} // Trigger when video metadata is loaded
-            />
+            <video ref={videoRef} autoPlay muted></video>
         </div>
     );
 };
