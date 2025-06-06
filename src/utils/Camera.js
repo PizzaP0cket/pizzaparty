@@ -12,7 +12,6 @@ const QRScanner = () => {
     useEffect(() => {
         const getCameraStream = async () => {
             try {
-                // Request access to the back camera
                 const stream = await navigator.mediaDevices.getUserMedia({
                     video: { facingMode: { ideal: 'environment' } }
                 });
@@ -21,7 +20,7 @@ const QRScanner = () => {
                     videoRef.current.srcObject = stream;
                 }
                 streamRef.current = stream;
-                setHasCamera(true); // Camera is available, so we can proceed with QR scanning
+                setHasCamera(true); // Camera is available
             } catch (err) {
                 console.error('Error accessing camera:', err);
                 setHasError(true);
@@ -38,7 +37,7 @@ const QRScanner = () => {
     }, []);
 
     useEffect(() => {
-        if (!hasCamera || !videoLoaded) return; // Don't run the scanning logic if no camera or video is not loaded
+        if (!hasCamera || !videoLoaded) return;
 
         const interval = setInterval(() => {
             if (!videoRef.current || !canvasRef.current) return;
@@ -47,8 +46,10 @@ const QRScanner = () => {
             const canvas = canvasRef.current;
             const ctx = canvas.getContext('2d');
 
-            // Ensure the canvas size matches the video size
-            if (video.videoWidth === 0 || video.videoHeight === 0) return;
+            if (video.videoWidth === 0 || video.videoHeight === 0) {
+                console.log('Video dimensions are not available yet');
+                return;
+            }
 
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
@@ -67,10 +68,10 @@ const QRScanner = () => {
 
                 clearInterval(interval); // Stop scanning after a successful scan
             }
-        }, 500); // Scan every 0.5 seconds
+        }, 500);
 
         return () => clearInterval(interval);
-    }, [hasCamera, videoLoaded]); // Re-run when camera or video loaded state changes
+    }, [hasCamera, videoLoaded]);
 
     const handleVideoLoad = () => {
         // Once the video is loaded, set the videoLoaded flag to true
